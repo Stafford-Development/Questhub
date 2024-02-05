@@ -9,7 +9,10 @@
   top: 0;
   width: 100%;
 }
-
+.dropdown-toggle {
+  background: none !important;
+  border: none !important;
+}
 .logo {
   height: 6em;
   padding: 1.5em;

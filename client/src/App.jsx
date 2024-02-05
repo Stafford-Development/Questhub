@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
-//import './App.css'
+import './styling/App.css'
 import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
 import Header from './components/header';
 

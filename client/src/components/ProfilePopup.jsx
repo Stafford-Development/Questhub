@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Image, Dropdown } from 'react-bootstrap';
+import '../styling/App.css';
 
 const ProfilePopup = ({ profilePicUrl }) => {
  
 
   return (
     <Dropdown>
-      <Dropdown.Toggle variant="success" id="dropdown-basic">
-        <Image src={profilePicUrl} roundedCircle />
+      <Dropdown.Toggle variant="success" id="dropdown-basic" >
+        <Image src={profilePicUrl} width={60} height={60} roundedCircle />
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
