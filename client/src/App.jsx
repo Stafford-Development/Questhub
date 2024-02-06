@@ -18,7 +18,7 @@ function App() {
     <Router>
       {loggedIn ? <Header loggedIn={loggedIn}/> : null}
       <Routes>
-        <Route path="/home" element={loggedIn ? <Home/> : <Navigate to="/login" />} />
+        <Route path="/" element={loggedIn ? <Home/> : <Navigate to="/login" />} />
         <Route path="/login" element={ !loggedIn ? <Login loggedIn={loggedIn} /> : <Navigate to="/home" />}/>
         
       </Routes>

@@ -19,10 +19,10 @@ function Header(loggedIn) {
                 className="d-inline-block align-top"
               />
               </Navbar.Brand>
-              <Navbar.Brand className='mt-3'  href="home">
+              <Navbar.Brand className='mt-3'  href="">
                 Quester
               </Navbar.Brand>
-              <Nav.Link className='mt-3' href="home">Home</Nav.Link>
+              <Nav.Link className='mt-3' href="">Home</Nav.Link>
               <Nav.Link className='mt-3' href="campaigns">Campaigns</Nav.Link>
             </Nav>
             <ProfilePopup profilePicUrl={profilePicUrl} />
