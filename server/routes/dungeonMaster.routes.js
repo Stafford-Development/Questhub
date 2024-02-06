@@ -1,7 +1,7 @@
 import express from 'express';
 import OpenAI from "openai";
 import dotenv from 'dotenv';
-import { createCampaign, updateCampaign, readCampaign, createUser, loginUser } from '../database/db.js'
+import { createCampaign, updateCampaign, readCampaign, createUser, loginUser, deleteCampaign } from '../database/db.js'
 
 dotenv.config();
 
@@ -78,6 +78,14 @@ router.post('/chat', async (req, res) => {
     const title = req.body.title;
 
     const user = await readCampaign(name, password, title);
+    res.send(user);
+  });
+  router.post('/delete-campaign', async (req, res) => {
+    const username = req.body.name;
+    const password = req.body.password; 
+    const title = req.body.title;
+
+    const user = await deleteCampaign(username, password, title);
     res.send(user);
   });
   //router.post('/start-adventure', async (req, res) => {
