@@ -8,7 +8,7 @@ const ProfilePopup = ({ profilePicUrl }) => {
   return (
     <Dropdown>
       <Dropdown.Toggle variant="success" id="dropdown-basic" >
-        <Image src={profilePicUrl} width={60} height={60} roundedCircle />
+        <Image src={profilePicUrl} width={55} height={55} roundedCircle />
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
