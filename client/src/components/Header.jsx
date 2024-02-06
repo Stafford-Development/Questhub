@@ -1,4 +1,4 @@
-import { Navbar, Nav, NavDropdown, Container, Row, Col } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Container, Row, Col, Image} from 'react-bootstrap';
 import ProfilePopup from './profilePopup.jsx';
 import '../styling/App.css'
 import { Link } from 'react-router-dom';
@@ -8,15 +8,15 @@ function Header(loggedIn) {
   
     return (
       <>
-        <Navbar bg="dark" variant="dark" className='justify-content-between' fixed='top'>
+        <Navbar bg="dark" variant="dark" className='justify-content-between' fixed='top' >
             <Nav>
-            <Navbar.Brand className='ms-3' href="/">
-              <img
+              <Navbar.Brand className='ms-3' href="/">
+              <Image
                 src="../public/Buddy.gif"  // Replace with the path to your image
                 alt="Brand"
                 width="50"
-                margin="10px"
                 className="d-inline-block align-top"
+                style={{margin: "10px"}}
               />
               </Navbar.Brand>
               <Navbar.Brand className='mt-3'  href="/">
