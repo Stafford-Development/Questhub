@@ -10,7 +10,7 @@ function Header(loggedIn) {
       <>
         <Navbar bg="dark" variant="dark" className='justify-content-between' fixed='top'>
             <Nav>
-            <Navbar.Brand className='ms-3' href="home">
+            <Navbar.Brand className='ms-3' href="/">
               <img
                 src="../public/Buddy.gif"  // Replace with the path to your image
                 alt="Brand"
@@ -19,10 +19,10 @@ function Header(loggedIn) {
                 className="d-inline-block align-top"
               />
               </Navbar.Brand>
-              <Navbar.Brand className='mt-3'  href="">
+              <Navbar.Brand className='mt-3'  href="/">
                 Quester
               </Navbar.Brand>
-              <Nav.Link className='mt-3' href="">Home</Nav.Link>
+              <Nav.Link className='mt-3' href="/">Home</Nav.Link>
               <Nav.Link className='mt-3' href="campaigns">Campaigns</Nav.Link>
             </Nav>
             <ProfilePopup profilePicUrl={profilePicUrl} />
