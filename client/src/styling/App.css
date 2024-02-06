@@ -36,6 +36,23 @@
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
+.login-background {
+  position: absolute;
+  left:0;
+  top:0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(10px);
+  
+}
+.login-name {
+  font-size: 2em;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 
 @keyframes logo-spin {
   from {
