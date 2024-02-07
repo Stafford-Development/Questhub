@@ -8,43 +8,42 @@ function Login(isLoggedin) {
   return (
     <Container fluid>
       <Image className="login-background" src="/Town.gif"/>
-      <Row className='g-0'>
-        <Col>
-          <Card className='bg-dark text-white h-100 logo-box' >
-            <Card.Body className="d-flex align-items-center justify-content-center">
-              <h1 className='login-name'>Quester</h1>
-              <p>Dungeons. Danger. Quests.</p>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col>
-          <Card className='bg-dark text-white h-100'>
-            <Card.Body>
-              <Form>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Email address</Form.Label>
-                  <Form.Control type="email" placeholder="Enter email" />
-                  <Form.Text className="text-muted">
-                    We'll never share your email with anyone else.
-                  </Form.Text>
-                </Form.Group>
+      <Card className='bg-dark text-white' >
+            <Row>
+              <Card.Body className="logo-box d-flex align-items-center justify-content-center">
+                <Col>
+                  <h1 className='login-name'>Quester</h1>
+                  <p>Dungeons. Danger. Quests.</p>
+                </Col>
+              
+                <Col>
+                  <Card className='bg-light d-flex align-items-center text-black justify-content-center'>
+                    <Card.Body>
+                      <Form className='items-center'>
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                          <Form.Label>Email address</Form.Label>
+                          <Form.Control type="email" placeholder="Enter email" />
+                        </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control type="password" placeholder="Password" />
-                </Form.Group>
-                <Button variant="light" type="submit">
-                  Log In
-                </Button>
-                <Button variant="light" type="submit" className='ms-3'>
-                  Register
-                </Button>
-              </Form>
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                          <Form.Label>Password</Form.Label>
+                          <Form.Control type="password" placeholder="Password" />
+                        </Form.Group>
+                        <Button variant="dark" type="submit" className='mb-3'>
+                          Log In
+                        </Button>
+                        <Button variant="dark" type="submit" className='mx-auto d-block'>
+                          Register
+                        </Button>
+                      </Form>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              
             </Card.Body>
+          </Row>
           </Card>
-        </Col>
-      </Row>
-    </Container>
+      </Container>
   )
 }
 
