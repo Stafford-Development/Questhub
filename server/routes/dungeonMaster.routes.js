@@ -1,12 +1,14 @@
 import express from 'express';
 import OpenAI from "openai";
 import dotenv from 'dotenv';
-import { createCampaign, updateCampaign, readCampaign, createUser, loginUser } from '../database/db.js'
+import bcrypt from 'bcrypt';
+import { createCampaign, updateCampaign, readCampaign, createUser, getUserHash } from '../database/db.js'
 
 dotenv.config();
 
 const APIKey = process.env.OPENAI_API_KEY;
 const router = express.Router();
+const saltingRounds = 10;
 
 const openai = new OpenAI({apiKey: APIKey});
 
@@ -44,15 +46,23 @@ router.post('/chat', async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    const user = await createUser(username, password);
-    res.send(user);
+    bcrypt.hash(password, saltingRounds, async function(err, hash) {
+      const user = await createUser(username, hash);
+      res.send(user);
+    });
   });
   router.post('/login-user', async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    const user = await loginUser(username, password);
-    res.send(user);
+    const hash = await getUserHash(username);
+    bcrypt.compare(password, hash, function(err, result) {
+      if (result) {
+        res.send("Password is correct!");
+      } else {
+        res.send("Password is incorrect!");
+      }
+    });
   });
   router.post('/create-campaign', async (req, res) => {
     const username = req.body.username;
