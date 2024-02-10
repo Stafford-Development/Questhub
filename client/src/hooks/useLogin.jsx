@@ -75,9 +75,44 @@ const useLogin = ({ setLoggedIn }) => {
       setLoading(false);
     }
   };
+  const logout = async () => {
+    setLoading(true);
+    setError(null);
 
+    try {
+      // Make API call to check-login endpoint
+      const response = await fetch('http://localhost:3000/api/logout', {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Check login failed');
+      }
+
+      // Handle successful check logout
+      const data = await response.json();
+      console.log(data.loggedOut)
+      // Handle successful login
+      if (data.loggedOut) {
+        setLoggedIn(false);
+      }
+      else {
+        setLoggedIn(true);
+      }
+      // ...
+
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
   //return { loading, error, login };
-  return { login, checkLogin };
+  return { login, checkLogin, logout };
 };
 
 export default useLogin;

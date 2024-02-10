@@ -4,7 +4,7 @@ import '../styling/App.css'
 import { Link } from 'react-router-dom';
 
 const profilePicUrl = '/Ethan.jpg';
-function Header(loggedIn) {
+function Header({logout}) {
   
     return (
       <>
@@ -25,7 +25,7 @@ function Header(loggedIn) {
               <Nav.Link className='mt-3' href="/">Home</Nav.Link>
               <Nav.Link className='mt-3' href="campaigns">Campaigns</Nav.Link>
             </Nav>
-            <ProfilePopup profilePicUrl={profilePicUrl} />
+            <ProfilePopup logout={logout} profilePicUrl={profilePicUrl} />
             
 
         </Navbar>

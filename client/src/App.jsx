@@ -13,12 +13,13 @@ import useLogin from './hooks/useLogin'
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
-  const {checkLogin} = useLogin({setLoggedIn: setLoggedIn});
-  useEffect(() => { checkLogin() }, [checkLogin]);
-
+  const [loading, setLoading] = useState(true);
+  const {checkLogin, logout} = useLogin({setLoggedIn: setLoggedIn});
+  useEffect(() => { checkLogin().finally(() => setLoading(false)) }, []);
+  if (loading) return <div>Loading...</div>
   return (
     <Router>
-      {loggedIn ? <Header loggedIn={loggedIn}/> : null}
+      {loggedIn ? <Header logout={logout}/> : null}
       <Routes>
         <Route path="/" element={loggedIn ? <Home/> : <Navigate to="/login" />} />
         <Route path="/login" element={ !loggedIn ? <Login setLoggedIn={setLoggedIn} /> : <Navigate to="/" />}/>

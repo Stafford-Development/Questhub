@@ -69,10 +69,10 @@ router.post('/chat', async (req, res) => {
   router.get('/logout', (req, res) => {
     req.session.destroy(err => {
       if(err) {
-        return res.send('Error occurred during logout');
+        res.send({loggedOut: false});
       }
       res.clearCookie('connect.sid');
-      res.send('Logged out successfully');
+      res.send({loggedOut: true});
     });
   });
 
