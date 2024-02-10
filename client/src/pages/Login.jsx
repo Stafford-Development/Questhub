@@ -1,31 +1,59 @@
-import { useState } from 'react'
+import { useState} from 'react'
 import '../styling/App.css'
-import {Button, Form } from 'react-bootstrap';
+import {Button, Form, Image, Container, Card, Row, Col } from 'react-bootstrap'
+import useLogin from '../hooks/useLogin'
 
 
 
-function Login(isLoggedin) {
+
+function Login({ setLoggedIn }) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('')
+  const {login} = useLogin({setLoggedIn: setLoggedIn});
+  
+
   return (
-    <Form>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control type="email" placeholder="Enter email" />
-        <Form.Text className="text-muted">
-          We'll never share your email with anyone else.
-        </Form.Text>
-      </Form.Group>
+    <Container fluid>
+      <Image className="login-background" src="/Town.gif"/>
+      <Card className='bg-dark text-white' >
+            <Row>
+              <Card.Body className="logo-box d-flex align-items-center justify-content-center">
+                <Col>
+                  <h1 className='login-name'>Quester</h1>
+                  <p>Dungeons. Danger. Quests.</p>
+                </Col>
+              
+                <Col>
+                  <Card className='bg-light d-flex align-items-center text-black justify-content-center'>
+                    <Card.Body>
+                      <Form className='items-center'>
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                          <Form.Label>Email address</Form.Label>
+                          <Form.Control type="text" placeholder="Enter Username" value={username} onChange={e => setUsername(e.target.value)} />
+                        </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" />
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicCheckbox">
-        <Form.Check type="checkbox" label="Check me out" />
-      </Form.Group>
-      <Button variant="primary" type="submit">
-        Submit
-      </Button>
-    </Form>
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                          <Form.Label>Password</Form.Label>
+                          <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
+                        </Form.Group>
+                        <Button variant="dark" type="submit" className='mb-3' onClick={(event) => {
+                          event.preventDefault();
+                          login(username, password);
+                        }}>
+                          Log In
+                        </Button>
+                        <Button variant="dark" type="submit" className='mx-auto d-block'>
+                          Register
+                        </Button>
+                      </Form>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              
+            </Card.Body>
+          </Row>
+          </Card>
+      </Container>
   )
 }
 

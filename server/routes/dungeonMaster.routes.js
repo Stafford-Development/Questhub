@@ -1,12 +1,14 @@
 import express from 'express';
 import OpenAI from "openai";
 import dotenv from 'dotenv';
-import { createCampaign, updateCampaign, readCampaign, createUser, loginUser } from '../database/db.js'
+import bcrypt from 'bcrypt';
+import { createCampaign, updateCampaign, readCampaign, createUser, getUser } from '../database/db.js'
 
 dotenv.config();
 
 const APIKey = process.env.OPENAI_API_KEY;
 const router = express.Router();
+const saltingRounds = 10;
 
 const openai = new OpenAI({apiKey: APIKey});
 
@@ -44,15 +46,42 @@ router.post('/chat', async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    const user = await createUser(username, password);
-    res.send(user);
+    bcrypt.hash(password, saltingRounds, async function(err, hash) {
+      const user = await createUser(username, hash);
+      res.send(user);
+    });
   });
   router.post('/login-user', async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    const user = await loginUser(username, password);
-    res.send(user);
+    const user = await getUser(username);
+    const hash = user.password;
+    bcrypt.compare(password, hash, function(err, result) {
+      if (result) {
+        req.session.userId = user._id;
+        res.send({success: true});
+      } else {
+        res.send({success: false});
+      }
+    });
+  });
+  router.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+      if(err) {
+        res.send({loggedOut: false});
+      }
+      res.clearCookie('connect.sid');
+      res.send({loggedOut: true});
+    });
+  });
+
+  router.get('/check-login', (req, res) => {
+    if (req.session.userId) {
+      res.send({ loggedIn: true, userId: req.session.userId });
+    } else {
+      res.send({ loggedIn: false });
+    }
   });
   router.post('/create-campaign', async (req, res) => {
     const username = req.body.username;

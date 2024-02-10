@@ -26,15 +26,17 @@ export const createUser = async (username, password) => {
     console.error('Error creating user', error);
   }
 };
-export const loginUser = async (username, password) => {
+export const getUser = async (username) => {
   try {
-    const user = await User.findOne({ username, password });
-    console.log('User logged in...');
+    const user = await User.findOne({ username });
+    console.log('Found User...');
     return user;
   } catch (error) {
-    console.error('Error logging in user', error);
+    console.error('Error finding user', error);
   }
 };
+
+
 
 export const viewUserCampaigns = async (username, password) => {
   try {
