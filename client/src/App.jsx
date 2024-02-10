@@ -7,7 +7,9 @@ import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
 import Header from './components/Header';
 import Login from './pages/Login';
 import Home from './pages/Home';
-import useLogin from './hooks/useLogin'
+import useLogin from './hooks/useLogin';
+import CreateCampaign from './pages/CreateCampaign';
+
 
 
 
@@ -22,7 +24,10 @@ function App() {
       {loggedIn ? <Header logout={logout}/> : null}
       <Routes>
         <Route path="/" element={loggedIn ? <Home/> : <Navigate to="/login" />} />
+
         <Route path="/login" element={ !loggedIn ? <Login setLoggedIn={setLoggedIn} /> : <Navigate to="/" />}/>
+        <Route path="/create-campaign" element= {<CreateCampaign/>}/>
+
         
       </Routes>
     </Router>

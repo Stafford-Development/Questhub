@@ -82,6 +82,20 @@ export const updateCampaign = async (username, password, title, log) => {
   }
 };
 
+export const deleteCampaign = async (username, password, title) => {
+  try {
+    const user = await User.findOne({ username, password });
+    //const campaignIndex = user.campaigns.findIndex(c => c.title === title);
+    //user.campaigns.splice(campaignIndex, 1);
+    const campaign = user.campaigns.find(c => c.title === title);
+    user.campaigns.pull(campaign);
+    await user.save();
+    console.log('Campaign deleted...')
+
+  } catch (error) {
+    console.error('Error deleting campaign', error);
+  }
+};
 
 /*export const deleteUser = async (username, password) => {
   try {
