@@ -60,9 +60,9 @@ router.post('/chat', async (req, res) => {
     bcrypt.compare(password, hash, function(err, result) {
       if (result) {
         req.session.userId = user._id;
-        res.send("Logged in successfully");
+        res.send({success: true});
       } else {
-        res.send("Password is incorrect!");
+        res.send({success: false});
       }
     });
   });

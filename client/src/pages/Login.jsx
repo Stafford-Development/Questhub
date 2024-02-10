@@ -1,10 +1,17 @@
-import { useState } from 'react'
+import { useState} from 'react'
 import '../styling/App.css'
-import {Button, Form, Image, Container, Card, Row, Col } from 'react-bootstrap';
+import {Button, Form, Image, Container, Card, Row, Col } from 'react-bootstrap'
+import useLogin from '../hooks/useLogin'
 
 
 
-function Login(isLoggedin) {
+
+function Login({ setLoggedIn }) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('')
+  const {login} = useLogin({setLoggedIn: setLoggedIn});
+  
+
   return (
     <Container fluid>
       <Image className="login-background" src="/Town.gif"/>
@@ -22,14 +29,17 @@ function Login(isLoggedin) {
                       <Form className='items-center'>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                           <Form.Label>Email address</Form.Label>
-                          <Form.Control type="email" placeholder="Enter email" />
+                          <Form.Control type="text" placeholder="Enter Username" value={username} onChange={e => setUsername(e.target.value)} />
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                           <Form.Label>Password</Form.Label>
-                          <Form.Control type="password" placeholder="Password" />
+                          <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
                         </Form.Group>
-                        <Button variant="dark" type="submit" className='mb-3'>
+                        <Button variant="dark" type="submit" className='mb-3' onClick={(event) => {
+                          event.preventDefault();
+                          login(username, password);
+                        }}>
                           Log In
                         </Button>
                         <Button variant="dark" type="submit" className='mx-auto d-block'>
