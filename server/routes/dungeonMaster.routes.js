@@ -2,7 +2,7 @@ import express from 'express';
 import OpenAI from "openai";
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
-import { createCampaign, updateCampaign, readCampaign, createUser, getUserHash } from '../database/db.js'
+import { createCampaign, updateCampaign, readCampaign, createUser, getUser } from '../database/db.js'
 
 dotenv.config();
 
@@ -55,14 +55,33 @@ router.post('/chat', async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    const hash = await getUserHash(username);
+    const user = await getUser(username);
+    const hash = user.password;
     bcrypt.compare(password, hash, function(err, result) {
       if (result) {
-        res.send("Password is correct!");
+        req.session.userId = user._id;
+        res.send("Logged in successfully");
       } else {
         res.send("Password is incorrect!");
       }
     });
+  });
+  router.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+      if(err) {
+        return res.send('Error occurred during logout');
+      }
+      res.clearCookie('connect.sid');
+      res.send('Logged out successfully');
+    });
+  });
+
+  router.get('/check-login', (req, res) => {
+    if (req.session.userId) {
+      res.send({ loggedIn: true, userId: req.session.userId });
+    } else {
+      res.send({ loggedIn: false });
+    }
   });
   router.post('/create-campaign', async (req, res) => {
     const username = req.body.username;

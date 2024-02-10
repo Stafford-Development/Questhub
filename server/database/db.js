@@ -26,11 +26,11 @@ export const createUser = async (username, password) => {
     console.error('Error creating user', error);
   }
 };
-export const getUserHash = async (username) => {
+export const getUser = async (username) => {
   try {
     const user = await User.findOne({ username });
     console.log('Found User...');
-    return user.password;
+    return user;
   } catch (error) {
     console.error('Error finding user', error);
   }
