@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import Home from './pages/Home';
 import useLogin from './hooks/useLogin';
 import CreateCampaign from './pages/CreateCampaign';
+import Campaigns from './pages/Campaigns';
 
 
 
@@ -27,6 +28,7 @@ function App() {
 
         <Route path="/login" element={ !loggedIn ? <Login setLoggedIn={setLoggedIn} /> : <Navigate to="/" />}/>
         <Route path="/create-campaign" element= {<CreateCampaign/>}/>
+        <Route path="/campaigns" element= {<Campaigns/>}/>
 
         
       </Routes>
