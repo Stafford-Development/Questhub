@@ -24,11 +24,9 @@ function App() {
     <Router>
       {loggedIn ? <Header logout={logout}/> : null}
       <Routes>
-        <Route path="/" element={loggedIn ? <Home/> : <Navigate to="/login" />} />
-
+        <Route path="/" element={loggedIn ? <Campaigns/> : <Navigate to="/login" />} />
         <Route path="/login" element={ !loggedIn ? <Login setLoggedIn={setLoggedIn} /> : <Navigate to="/" />}/>
         <Route path="/create-campaign" element= {<CreateCampaign/>}/>
-        <Route path="/campaigns" element= {<Campaigns/>}/>
 
         
       </Routes>

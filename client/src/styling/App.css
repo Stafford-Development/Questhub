@@ -102,4 +102,8 @@
   background-color: rgb(38, 38, 41);
   color: white;
 }
-
+.logo-name {
+  font-size: 1.7em !important;
+  font-weight: bold !important;
+  text-decoration: underline !important;
+}
