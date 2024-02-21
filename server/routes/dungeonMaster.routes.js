@@ -84,29 +84,16 @@ router.post('/chat', async (req, res) => {
     }
   });
   router.post('/create-campaign', async (req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
-    const title = req.body.title;
-
-    const user = await createCampaign(username, password, title);
+    const user = await createCampaign(req.session.userId, req.body.title);
     res.send(user);
   });
   
   router.post('/update-campaign', async (req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
-    const title = req.body.title;
-    const log = req.body.log;
-
-    const user = await updateCampaign(username, password, title, log);
+    const user = await updateCampaign(req.session.userId, req.body.campaignId, req.body.log);
     res.send(user);
   });
   router.post('/read-campaign', async (req, res) => {
-    const name = req.body.name;
-    const password = req.body.password; 
-    const title = req.body.title;
-
-    const user = await readCampaign(name, password, title);
+    const user = await readCampaign(req.session.userId, req.body.campaignId);
     res.send(user);
   });
   //router.post('/start-adventure', async (req, res) => {

@@ -96,10 +96,11 @@
 .slick-prev:before, .slick-next:before {
   color: black !important; /* Replace with your color */
 }
-.carousel-height .card {
-  height: 600px !important; /* Adjust as needed */
+.campaign-card .card {
+  height: 200px !important; /* Adjust as needed */
   background-color: rgb(38, 38, 41);
   color: white;
+  margin-top: 2em !important;
 }
 .logo-name {
   font-size: 1.7em !important;
@@ -109,8 +110,13 @@
 .login-container {
   margin-top: 80px;
   width: 60vw !important;
-  min-height: 100vh !important;
-  position: relative;
+  min-height: 94.5vh !important;
+  min-width: 450px !important;
+  position: relative !important;
   background-color: white;
+  overflow: auto;
  
+}
+.login-card {
+  margin-top: 40px !important;
 }

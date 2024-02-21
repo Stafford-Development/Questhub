@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const CampaignSchema = new mongoose.Schema({
-    title: { type: String, unique: true },
+    title:  String,
     log: Object
   });
 

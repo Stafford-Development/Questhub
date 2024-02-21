@@ -38,9 +38,9 @@ export const getUser = async (username) => {
 
 
 
-export const viewUserCampaigns = async (username, password) => {
+export const viewUserCampaigns = async (userId) => {
   try {
-    const user = await User.findOne({ username, password });
+    const user = await User.findOne({ userId });
     console.log('User campaigns:', user.campaigns);
     return user.campaigns;
   } catch (error) {
@@ -48,21 +48,24 @@ export const viewUserCampaigns = async (username, password) => {
   }
 };
 
-export const createCampaign = async (username, password, title) => {
+export const createCampaign = async (userId, title) => {
   try {
-    const user = await User.findOne({ username, password });
+    const _id = userId;
+    const user = await User.findOne({ _id });
     user.campaigns.push({title: title, log: []});
     await user.save();
     console.log('Campaign created...');
-  } catch (error) {z
+    return user;
+  } catch (error) {
     console.error('Error creating campaign', error);
   }
 };
 
-export const readCampaign = async (username, password, title) => {
+export const readCampaign = async (userId, campaignId) => {
   try {
-    const user = await User.findOne({ username, password });
-    const campaign = user.campaigns.find(c => c.title === title);
+    const _id = userId;
+    const user = await User.findOne({ _id });
+    const campaign = user.campaigns.find(c => c._id.equals(new mongoose.Types.ObjectId(campaignId)));
     console.log('Campaign found:', campaign);
     return campaign;
   } catch (error) {
@@ -70,10 +73,10 @@ export const readCampaign = async (username, password, title) => {
   }
 };
 
-export const updateCampaign = async (username, password, title, log) => {
+export const updateCampaign = async (userId, campaignId, log) => {
   try {
-    const user = await User.findOne({ username, password });
-    const campaign = user.campaigns.find(c => c.title === title);
+    const user = await User.findOne({ userId });
+    const campaign = user.campaigns.find(c => c._id === campaignId);
     campaign.log = log;
     await user.save();
     console.log('Campaign updated successfully');
@@ -82,12 +85,12 @@ export const updateCampaign = async (username, password, title, log) => {
   }
 };
 
-export const deleteCampaign = async (username, password, title) => {
+export const deleteCampaign = async (userId, campaignId) => {
   try {
-    const user = await User.findOne({ username, password });
+    const user = await User.findOne({ userId });
     //const campaignIndex = user.campaigns.findIndex(c => c.title === title);
     //user.campaigns.splice(campaignIndex, 1);
-    const campaign = user.campaigns.find(c => c.title === title);
+    const campaign = user.campaigns.find(c => c._id === campaignId);
     user.campaigns.pull(campaign);
     await user.save();
     console.log('Campaign deleted...')
