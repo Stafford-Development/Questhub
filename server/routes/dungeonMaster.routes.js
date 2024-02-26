@@ -2,7 +2,7 @@ import express from 'express';
 import OpenAI from "openai";
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
-import { createCampaign, updateCampaign, readCampaign, createUser, getUser } from '../database/db.js'
+import { createCampaign, updateCampaign, readCampaign, createUser, getUser, viewUserCampaigns } from '../database/db.js'
 
 dotenv.config();
 
@@ -82,6 +82,10 @@ router.post('/chat', async (req, res) => {
     } else {
       res.send({ loggedIn: false });
     }
+  });
+  router.get('/view-campaigns', async (req, res) => {
+    const campaigns = await viewUserCampaigns(req.session.userId);
+    res.send(campaigns);
   });
   router.post('/create-campaign', async (req, res) => {
     const user = await createCampaign(req.session.userId, req.body.title);

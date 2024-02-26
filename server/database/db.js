@@ -40,7 +40,8 @@ export const getUser = async (username) => {
 
 export const viewUserCampaigns = async (userId) => {
   try {
-    const user = await User.findOne({ userId });
+    const _id = userId;
+    const user = await User.findOne({ _id });
     console.log('User campaigns:', user.campaigns);
     return user.campaigns;
   } catch (error) {
@@ -75,8 +76,9 @@ export const readCampaign = async (userId, campaignId) => {
 
 export const updateCampaign = async (userId, campaignId, log) => {
   try {
-    const user = await User.findOne({ userId });
-    const campaign = user.campaigns.find(c => c._id === campaignId);
+    const _id = userId;
+    const user = await User.findOne({ _id });
+    const campaign = user.campaigns.find(c => c._id.equals(new mongoose.Types.ObjectId(campaignId)));
     campaign.log = log;
     await user.save();
     console.log('Campaign updated successfully');
@@ -87,10 +89,11 @@ export const updateCampaign = async (userId, campaignId, log) => {
 
 export const deleteCampaign = async (userId, campaignId) => {
   try {
-    const user = await User.findOne({ userId });
+    const _id = userId;
+    const user = await User.findOne({ _id });
     //const campaignIndex = user.campaigns.findIndex(c => c.title === title);
     //user.campaigns.splice(campaignIndex, 1);
-    const campaign = user.campaigns.find(c => c._id === campaignId);
+    const campaign = user.campaigns.find(c => c._id.equals(new mongoose.Types.ObjectId(campaignId)));
     user.campaigns.pull(campaign);
     await user.save();
     console.log('Campaign deleted...')
