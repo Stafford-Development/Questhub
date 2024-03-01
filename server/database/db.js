@@ -53,7 +53,9 @@ export const createCampaign = async (userId, title) => {
   try {
     const _id = userId;
     const user = await User.findOne({ _id });
-    user.campaigns.push({title: title, log: []});
+    user.campaigns.push({title: title, log: [
+        {role: "system", content: "You are an assistant to the dungeon master for Dungeons and Dragons fifth edition. Your job is to help the dungeon master describe moments in the game. Please describe the scene, but refrain from including any dialogue. The dungeon master will handle that."}
+    ]});
     await user.save();
     console.log('Campaign created...');
     return user;
@@ -82,6 +84,7 @@ export const updateCampaign = async (userId, campaignId, log) => {
     campaign.log = log;
     await user.save();
     console.log('Campaign updated successfully');
+    return campaign;
   } catch (error) {
     console.error('Error updating campaign', error);
   }

@@ -14,12 +14,12 @@ const openai = new OpenAI({apiKey: APIKey});
 
 let messageContent = "";
 
-let conversationHistory = [
-  {role: "system", content: "You are an assistant to the dungeon master for Dungeons and Dragons fifth edition. Your job is to help the dungeon master describe moments in the game. Please describe the scene, but refrain from including any dialogue. The dungeon master will handle that."},
-];
+
 
 
 router.post('/chat', async (req, res) => {
+    const campaign = await readCampaign(req.session.userId, req.body.campaignId);
+    let conversationHistory = campaign.log;
     conversationHistory.push({role: "user", content: req.body.message});
     const chatCompletion = await openai.chat.completions.create({
       model: "gpt-4",
@@ -27,10 +27,11 @@ router.post('/chat', async (req, res) => {
     });
     messageContent = chatCompletion.choices[0].message.content;
     conversationHistory.push({role: "assistant", content: messageContent});
-    res.send(chatCompletion.choices[0].message);
+    const updatedCampaign = await updateCampaign(req.session.userId, req.body.campaignId, conversationHistory);
+    res.send(updatedCampaign.log);
   });
   
-  router.post('/image', async (req, res) => {
+ /* router.post('/image', async (req, res) => {
     //image completion
     const imageCompletion = await openai.images.generate({
       model: "dall-e-3",
@@ -41,7 +42,8 @@ router.post('/chat', async (req, res) => {
     });
     const imageURL = imageCompletion.data[0];
     res.send(imageURL)
-  });
+  });*/
+
   router.post('/create-user', async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
@@ -93,12 +95,12 @@ router.post('/chat', async (req, res) => {
   });
   
   router.post('/update-campaign', async (req, res) => {
-    const user = await updateCampaign(req.session.userId, req.body.campaignId, req.body.log);
-    res.send(user);
+    const campaign = await updateCampaign(req.session.userId, req.body.campaignId, req.body.log);
+    res.send(campaign);
   });
   router.post('/read-campaign', async (req, res) => {
-    const user = await readCampaign(req.session.userId, req.body.campaignId);
-    res.send(user);
+    const campaign = await readCampaign(req.session.userId, req.body.campaignId);
+    res.send(campaign);
   });
   //router.post('/start-adventure', async (req, res) => {
     // Start a new adventure
