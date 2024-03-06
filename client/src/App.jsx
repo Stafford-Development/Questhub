@@ -13,7 +13,6 @@ import Campaigns from './pages/Campaigns';
 
 
 
-
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
