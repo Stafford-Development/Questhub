@@ -1,7 +1,6 @@
 #root {
-  max-width: 1280px;
+  max-width: 3000px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
   font-family: 'Cinzel', serif;
 }
@@ -37,7 +36,7 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 .login-background {
-  position: absolute;
+  position: fixed;
   left:0;
   top:0;
   z-index: 0;
@@ -93,4 +92,31 @@
   border-radius: 1em;
   margin: 1em;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
+}
+.slick-prev:before, .slick-next:before {
+  color: black !important; /* Replace with your color */
+}
+.campaign-card .card {
+  height: 200px !important; /* Adjust as needed */
+  background-color: rgb(38, 38, 41);
+  color: white;
+  margin-top: 2em !important;
+}
+.logo-name {
+  font-size: 1.7em !important;
+  font-weight: bold !important;
+  text-decoration: underline !important;
+}
+.login-container {
+  margin-top: 80px;
+  width: 60vw !important;
+  min-height: 94.5vh !important;
+  min-width: 450px !important;
+  position: relative !important;
+  background-color: white;
+  overflow: auto;
+ 
+}
+.login-card {
+  margin-top: 40px !important;
 }

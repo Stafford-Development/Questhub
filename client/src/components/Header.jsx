@@ -10,20 +10,11 @@ function Header({logout}) {
       <>
         <Navbar bg="dark" variant="dark" className='justify-content-between' fixed='top' >
             <Nav>
-              <Navbar.Brand className='ms-3' href="/">
-              <Image
-                src="../public/Buddy.gif"  // Replace with the path to your image
-                alt="Brand"
-                width="50"
-                className="d-inline-block align-top"
-                style={{margin: "10px"}}
-              />
-              </Navbar.Brand>
-              <Navbar.Brand className='mt-3'  href="/">
+              
+              <Navbar.Brand className='ms-4 logo-name'  href="/">
                 Quester
               </Navbar.Brand>
-              <Nav.Link className='mt-3' href="/">Home</Nav.Link>
-              <Nav.Link className='mt-3' href="campaigns">Campaigns</Nav.Link>
+              
             </Nav>
             <ProfilePopup logout={logout} profilePicUrl={profilePicUrl} />
             

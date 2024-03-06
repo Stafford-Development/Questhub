@@ -2,7 +2,7 @@ import express from 'express';
 import OpenAI from "openai";
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
-import { createCampaign, updateCampaign, readCampaign, createUser, getUser } from '../database/db.js'
+import { createCampaign, updateCampaign, readCampaign, createUser, getUser, viewUserCampaigns } from '../database/db.js'
 
 dotenv.config();
 
@@ -14,12 +14,12 @@ const openai = new OpenAI({apiKey: APIKey});
 
 let messageContent = "";
 
-let conversationHistory = [
-  {role: "system", content: "You are an assistant to the dungeon master for Dungeons and Dragons fifth edition. Your job is to help the dungeon master describe moments in the game. Please describe the scene, but refrain from including any dialogue. The dungeon master will handle that."},
-];
+
 
 
 router.post('/chat', async (req, res) => {
+    const campaign = await readCampaign(req.session.userId, req.body.campaignId);
+    let conversationHistory = campaign.log;
     conversationHistory.push({role: "user", content: req.body.message});
     const chatCompletion = await openai.chat.completions.create({
       model: "gpt-4",
@@ -27,10 +27,11 @@ router.post('/chat', async (req, res) => {
     });
     messageContent = chatCompletion.choices[0].message.content;
     conversationHistory.push({role: "assistant", content: messageContent});
-    res.send(chatCompletion.choices[0].message);
+    const updatedCampaign = await updateCampaign(req.session.userId, req.body.campaignId, conversationHistory);
+    res.send(updatedCampaign.log);
   });
   
-  router.post('/image', async (req, res) => {
+ /* router.post('/image', async (req, res) => {
     //image completion
     const imageCompletion = await openai.images.generate({
       model: "dall-e-3",
@@ -41,7 +42,8 @@ router.post('/chat', async (req, res) => {
     });
     const imageURL = imageCompletion.data[0];
     res.send(imageURL)
-  });
+  });*/
+
   router.post('/create-user', async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
@@ -83,31 +85,22 @@ router.post('/chat', async (req, res) => {
       res.send({ loggedIn: false });
     }
   });
+  router.get('/view-campaigns', async (req, res) => {
+    const campaigns = await viewUserCampaigns(req.session.userId);
+    res.send(campaigns);
+  });
   router.post('/create-campaign', async (req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
-    const title = req.body.title;
-
-    const user = await createCampaign(username, password, title);
+    const user = await createCampaign(req.session.userId, req.body.title);
     res.send(user);
   });
   
   router.post('/update-campaign', async (req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
-    const title = req.body.title;
-    const log = req.body.log;
-
-    const user = await updateCampaign(username, password, title, log);
-    res.send(user);
+    const campaign = await updateCampaign(req.session.userId, req.body.campaignId, req.body.log);
+    res.send(campaign);
   });
   router.post('/read-campaign', async (req, res) => {
-    const name = req.body.name;
-    const password = req.body.password; 
-    const title = req.body.title;
-
-    const user = await readCampaign(name, password, title);
-    res.send(user);
+    const campaign = await readCampaign(req.session.userId, req.body.campaignId);
+    res.send(campaign);
   });
   //router.post('/start-adventure', async (req, res) => {
     // Start a new adventure
