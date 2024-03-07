@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-const useCampaigns = (setCampaigns) => {
+const useCampaigns = () => {
     const [loading, setLoading] = useState(true);
     
-    const fetchCampaigns = async () => {
+    const fetchCampaigns = async (setCampaigns) => {
         try {
         const response = await fetch('http://localhost:3000/api/view-campaigns', {
             method: 'GET',

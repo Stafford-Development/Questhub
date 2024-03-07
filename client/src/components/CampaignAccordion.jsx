@@ -4,11 +4,11 @@ import useCampaigns from '../hooks/useCampaigns';
 
 function CampaignCard() {
     const [campaigns, setCampaigns] = useState([]);
-    const { fetchCampaigns } = useCampaigns(setCampaigns);
+    const { fetchCampaigns } = useCampaigns();
 
     useEffect(() => {
         const getCampaigns = async () => {
-         await fetchCampaigns();
+         await fetchCampaigns(setCampaigns);
         };
         getCampaigns();
     }, []);
@@ -16,7 +16,7 @@ function CampaignCard() {
     return (
         <Accordion className="campaign-card">
             {campaigns.map((campaign, index) => (
-                <Row key={campaign._id} className="mt-2 mx-auto">
+                <Row key={campaign._id} className="mt-4 mx-auto">
                     <Col md={11}>
                         <Accordion.Item eventKey={index.toString()}>
                             <Accordion.Header>{campaign.title}</Accordion.Header>
