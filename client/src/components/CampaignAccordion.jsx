@@ -8,7 +8,8 @@ function CampaignCard() {
 
     useEffect(() => {
         const getCampaigns = async () => {
-         await fetchCampaigns(setCampaigns);
+            const response = await fetchCampaigns();
+            setCampaigns(response);
         };
         getCampaigns();
     }, []);
@@ -32,7 +33,7 @@ function CampaignCard() {
                         </Accordion.Item>
                     </Col>
                     <Col md={1}>
-                        <Button className="mt-2" variant="dark">Enter</Button>
+                        <Button className="mt-2" variant="dark" href={`/Game/${campaign._id}`}>Enter</Button>
                     </Col>
                 </Row>
             ))}
