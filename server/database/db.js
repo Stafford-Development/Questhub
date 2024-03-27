@@ -49,16 +49,21 @@ export const viewUserCampaigns = async (userId) => {
   }
 };
 
-export const createCampaign = async (userId, title) => {
+export const createCampaign = async (userId, title, description) => {
   try {
     const _id = userId;
     const user = await User.findOne({ _id });
-    user.campaigns.push({title: title, log: [
-        {role: "system", content: "You are an assistant to the dungeon master for Dungeons and Dragons fifth edition. Your job is to help the dungeon master describe moments in the game. Please describe the scene, but refrain from including any dialogue. The dungeon master will handle that."}
-    ]});
+    const campaign = {title: title, log: [
+        {role: "system", content: "You are responsible for running a fantasy text based adventure game for a player. Their character's name is " + title + ". The description of the players character is as follows: " + description + ". You must create a story for the player to interact with and respond to the players actions."}
+      ],
+      description: description
+    };
+    user.campaigns.push(campaign);
     await user.save();
-    console.log('Campaign created...');
-    return user;
+    const savedCampaign = user.campaigns[user.campaigns.length - 1];
+    console.log('Campaign created with id:', savedCampaign._id);
+    return savedCampaign;
+
   } catch (error) {
     console.error('Error creating campaign', error);
   }

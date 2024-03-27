@@ -2,7 +2,8 @@ import mongoose from 'mongoose';
 
 const CampaignSchema = new mongoose.Schema({
     title:  String,
-    log: Object
+    description: String,
+    log: Object,
   });
 
 const UserSchema = new mongoose.Schema({
