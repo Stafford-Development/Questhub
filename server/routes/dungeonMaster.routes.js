@@ -28,7 +28,7 @@ router.post('/chat', async (req, res) => {
     messageContent = chatCompletion.choices[0].message.content;
     conversationHistory.push({role: "assistant", content: messageContent});
     const updatedCampaign = await updateCampaign(req.session.userId, req.body.campaignId, conversationHistory);
-    res.send(updatedCampaign.log);
+    res.send(updatedCampaign);
   });
   
  /* router.post('/image', async (req, res) => {
@@ -90,8 +90,8 @@ router.post('/chat', async (req, res) => {
     res.send(campaigns);
   });
   router.post('/create-campaign', async (req, res) => {
-    const user = await createCampaign(req.session.userId, req.body.title);
-    res.send(user);
+    const campaign = await createCampaign(req.session.userId, req.body.title, req.body.description);
+    res.send(campaign);
   });
   
   router.post('/update-campaign', async (req, res) => {
