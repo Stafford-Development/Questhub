@@ -105,6 +105,7 @@ export const deleteCampaign = async (userId, campaignId) => {
     user.campaigns.pull(campaign);
     await user.save();
     console.log('Campaign deleted...')
+    return campaign;
 
   } catch (error) {
     console.error('Error deleting campaign', error);
