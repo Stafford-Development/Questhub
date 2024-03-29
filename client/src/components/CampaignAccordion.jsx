@@ -1,10 +1,13 @@
 import {Accordion, Card, Row, Col, Button} from "react-bootstrap";
 import React, { useState, useEffect } from 'react';
 import useCampaigns from '../hooks/useCampaigns';
+import DeleteGameModal from './DeleteGameModal';
 
-function CampaignCard({handleShow}) {
-    const [campaigns, setCampaigns] = useState([]);
+
+function CampaignAccordion({campaigns, setCampaigns, handleShow, setIsNewGameModal, setCampaignId, setCampaignName}) {
     const { fetchCampaigns } = useCampaigns();
+
+    
 
     useEffect(() => {
         const getCampaigns = async () => {
@@ -13,6 +16,18 @@ function CampaignCard({handleShow}) {
         };
         getCampaigns();
     }, []);
+
+   const toggleNewGameModal = () => {
+        setIsNewGameModal(true);
+        handleShow();
+    }
+    const toggleDeleteGameModal = (campaignId, campaignName) => {
+        setIsNewGameModal(false);
+        setCampaignId(campaignId);
+        setCampaignName(campaignName);
+        handleShow();
+    }
+
 
     return (
         <Accordion className="campaign-card">
@@ -23,21 +38,21 @@ function CampaignCard({handleShow}) {
                             <Accordion.Header>{campaign.title}</Accordion.Header>
                             <Accordion.Body>
                                 {campaign.description}
+                                <Button onClick={() => toggleDeleteGameModal(campaign._id, campaign.title)}>Delete</Button>
                             </Accordion.Body>
                         </Accordion.Item>
                     </Col>
                     <Col md={1}>
                         <Button className="mt-2" variant="dark" href={`/Game/${campaign._id}`}>Enter</Button>
                     </Col>
+                    
                 </Row>
-
+                
             ))}
-            <Button className="mt-4" onClick={handleShow} variant="dark" >Create New Game</Button>
-            
-            
-            
+            <Button className="mt-4" onClick={toggleNewGameModal} variant="dark" >Create New Game</Button>
             
         </Accordion>
+
     );
 }
-export default CampaignCard;
+export default CampaignAccordion;

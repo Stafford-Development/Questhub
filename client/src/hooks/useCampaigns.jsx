@@ -91,8 +91,26 @@ const useCampaigns = () => {
         } catch (error) {
         console.error('Error fetching campaigns', error);
         }
-    }
+    };
+    const deleteCampaign = async (campaignId) => {
+        try {
+        const response = await fetch('http://localhost:3000/api/delete-campaign', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({campaignId}),
+          });
+
+        const campaign = await response.json();
+        setLoading(false);
+        return campaign;
+        } catch (error) {
+        console.error('Error fetching campaigns', error);
+        }
+    };
     
-    return {fetchCampaigns, readCampaign, chatCampaign, createCampaign, updateCampaign};
+    return {fetchCampaigns, readCampaign, chatCampaign, createCampaign, updateCampaign, deleteCampaign};
 };
 export default useCampaigns;

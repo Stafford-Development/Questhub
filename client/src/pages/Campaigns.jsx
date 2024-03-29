@@ -3,11 +3,17 @@ import CampaignAccordion from '../components/CampaignAccordion';
 import {Container, Card, Image, Button} from 'react-bootstrap';
 import '../styling/App.css';
 import NewGameModal from '../components/NewGameModal';
+import DeleteGameModal from '../components/DeleteGameModal';
 
 function Campaigns() {
+    const [campaigns, setCampaigns] = useState([]);
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const [isNewGameModal, setIsNewGameModal] = useState(true);
+
+    const [campaignName, setCampaignName] = useState('');
+    const [campaignId, setCampaignId] = useState('');
 
     return (
         <Container fluid>
@@ -20,11 +26,12 @@ function Campaigns() {
                 </Card>
                 <Card style={{ boxShadow: 'inset 0 0 10px #000000', height: "87vh", overflow: 'auto', backgroundImage: 'url("Page.jpg")'  }}>
                     <Card.Body>
-                        <CampaignAccordion handleShow={handleShow}/>
+                        <CampaignAccordion campaigns={campaigns} setCampaigns={setCampaigns} handleShow={handleShow} setIsNewGameModal={setIsNewGameModal} setCampaignId={setCampaignId} setCampaignName={setCampaignName}/>
                     </Card.Body>
                 </Card>
             </Container>
-            <NewGameModal show={show} handleClose={handleClose}/>
+            {isNewGameModal ? <NewGameModal show={show} handleClose={handleClose}/> : <DeleteGameModal show={show} handleClose={handleClose} campaignId={campaignId} campaignName={campaignName} setCampaigns={setCampaigns}/>}
+            
         </Container>
     );
 };
