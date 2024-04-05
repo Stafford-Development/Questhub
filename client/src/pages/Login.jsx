@@ -7,7 +7,7 @@ import useLogin from '../hooks/useLogin'
 
 
 function Login({ setLoggedIn }) {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('')
   const {login} = useLogin({setLoggedIn: setLoggedIn});
   
@@ -29,7 +29,7 @@ function Login({ setLoggedIn }) {
                       <Form className='items-center'>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                           <Form.Label>Email address</Form.Label>
-                          <Form.Control type="text" placeholder="Enter Username" value={username} onChange={e => setUsername(e.target.value)} />
+                          <Form.Control type="text" placeholder="Enter Username" value={email} onChange={e => setEmail(e.target.value)} />
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -38,7 +38,7 @@ function Login({ setLoggedIn }) {
                         </Form.Group>
                         <Button variant="dark" type="submit" className='mb-3' onClick={(event) => {
                           event.preventDefault();
-                          login(username, password);
+                          login(email, password);
                         }}>
                           Log In
                         </Button>

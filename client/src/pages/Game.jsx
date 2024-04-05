@@ -1,6 +1,6 @@
 import react from 'react';
 import GameWindow from '../components/GameWindow';
-import {Container, Card, Image, Button} from 'react-bootstrap';
+import {Container, Card, Image, Button, Spinner} from 'react-bootstrap';
 import '../styling/App.css';
 import { useParams } from 'react-router-dom';
 import useCampaigns  from '../hooks/useCampaigns';
@@ -38,7 +38,7 @@ function Game() {
     }, []);
 
     if (isLoading) {
-        return <div>Loading...</div>; // or your custom spinner
+        return <Spinner animation="border" role="status"/>; // or your custom spinner
     }
     
     return (

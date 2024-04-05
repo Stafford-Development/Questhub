@@ -2,7 +2,7 @@ import express from 'express';
 import OpenAI from "openai";
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
-import { createCampaign, updateCampaign, readCampaign, createUser, getUser, viewUserCampaigns, deleteCampaign } from '../database/db.js'
+import { createCampaign, updateCampaign, confirmUser, readCampaign, createUser, getUser, viewUserCampaigns, deleteCampaign, emailConfirmation } from '../database/db.js'
 
 dotenv.config();
 
@@ -45,19 +45,20 @@ router.post('/chat', async (req, res) => {
   });*/
 
   router.post('/create-user', async (req, res) => {
-    const username = req.body.username;
+    const email = req.body.email;
     const password = req.body.password;
 
     bcrypt.hash(password, saltingRounds, async function(err, hash) {
-      const user = await createUser(username, hash);
+      const user = await createUser(email, hash);
+      await emailConfirmation(email);
       res.send(user);
     });
   });
   router.post('/login-user', async (req, res) => {
-    const username = req.body.username;
+    const email = req.body.email;
     const password = req.body.password;
 
-    const user = await getUser(username);
+    const user = await getUser(email);
     const hash = user.password;
     bcrypt.compare(password, hash, function(err, result) {
       if (result) {
@@ -106,6 +107,16 @@ router.post('/chat', async (req, res) => {
     const campaign = await deleteCampaign(req.session.userId, req.body.campaignId);
     res.send(campaign);
   });
+  router.get('/confirm-email/:token', async (req, res) => {
+    const token = req.params.token;
+  
+    const user = await confirmUser(token);
+  
+    // Redirect the user to the login page, or send a success message
+    res.redirect('http://localhost:5173/ConfirmationSuccess');
+
+  });
+  
   //router.post('/start-adventure', async (req, res) => {
     // Start a new adventure
     // Send the initial response from the AI Dungeon Master back to the client
