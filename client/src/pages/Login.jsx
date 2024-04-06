@@ -2,6 +2,7 @@ import { useState} from 'react'
 import '../styling/App.css'
 import {Button, Form, Image, Container, Card, Row, Col } from 'react-bootstrap'
 import useLogin from '../hooks/useLogin'
+import RegisterModal from '../components/RegisterModal'
 
 
 
@@ -10,7 +11,9 @@ function Login({ setLoggedIn }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('')
   const {login} = useLogin({setLoggedIn: setLoggedIn});
-  
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   return (
     <Container fluid>
@@ -42,7 +45,11 @@ function Login({ setLoggedIn }) {
                         }}>
                           Log In
                         </Button>
-                        <Button variant="dark" type="submit" className='mx-auto d-block'>
+                        <Button variant="dark" type="submit" className='mx-auto d-block' onClick={(event) => {
+                          event.preventDefault();
+                          handleShow()
+                          
+                          }}>
                           Register
                         </Button>
                       </Form>
@@ -53,6 +60,7 @@ function Login({ setLoggedIn }) {
             </Card.Body>
           </Row>
           </Card>
+          <RegisterModal show={show} handleClose={handleClose} setLoggedIn={setLoggedIn}/>
       </Container>
   )
 }

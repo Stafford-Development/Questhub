@@ -111,8 +111,42 @@ const useLogin = ({ setLoggedIn }) => {
       setLoading(false);
     }
   };
+  const createUser = async (email, password) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      // Make API call to login endpoint
+      const response = await fetch('http://localhost:3000/api/create-user', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Login failed');
+      }
+      const data = await response.json();
+      // Handle successful login
+      if (data.success) {
+        setLoggedIn(true);
+      }
+      else {
+        setLoggedIn(false);
+      }
+      // ...
+
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
   //return { loading, error, login };
-  return { login, checkLogin, logout };
+  return { login, checkLogin, logout, createUser };
 };
 
 export default useLogin;
