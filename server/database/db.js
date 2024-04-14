@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 import User from './User.js';
+import crypto from 'crypto';
+import nodemailer from 'nodemailer';
 
 
 export const connectDB = async () => {
@@ -11,11 +13,13 @@ export const connectDB = async () => {
     process.exit(1);
   }
 };
-export const createUser = async (username, password) => {
+export const createUser = async (email, password) => {
   try {
     const user = new User({
-      username,
+      email,
       password,
+      token: undefined,
+      isEmailConfirmed: false,
       campaigns: []
     });
 
@@ -26,9 +30,71 @@ export const createUser = async (username, password) => {
     console.error('Error creating user', error);
   }
 };
-export const getUser = async (username) => {
+export const retrieveEmail = async (userId) => {
+  const _id = userId;
+  const user = await User.findOne({ _id});
+  return user.email;
+} 
+export const emailConfirmation = async (email) => {
+  const user = await User.findOne({ email: email });
+  user.token = crypto.randomBytes(20).toString('hex');
+  await user.save();
+
+  let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_ADDRESS,
+      pass: process.env.EMAIL_PASSWORD
+    }
+  });
+
+  let mailOptions = {
+    from: 'questerwebsite@gmail.com',
+    to: email,
+    subject: 'Email Confirmation',
+    html: `
+      <h2>Please click on the link to confirm your email</h2>
+      <a href="http://localhost:3000/api/confirm-email/${user.token}">Confirm Email</a>
+    `
+  };
+
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+  return user;
+}
+
+export const checkConfirmed = async (userId) => {
+  const _id = userId;
+  const user = await User.findOne({ _id });
+  return user.isEmailConfirmed;
+}
+export const confirmUser = async (token) => {
+  const user = await User.findOne({ token: token });
+
+  if (!user) {
+    return res.status(400).send({ message: 'Invalid confirmation token.' });
+  }
+
+  // Set the user's isEmailConfirmed field to true
+  user.isEmailConfirmed = true;
+
+  // Clear the emailConfirmationToken field
+  user.token = undefined;
+
+  // Save the user
+  await user.save();
+
+  return user;
+}
+
+export const getUser = async (email) => {
   try {
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ email });
     console.log('Found User...');
     return user;
   } catch (error) {

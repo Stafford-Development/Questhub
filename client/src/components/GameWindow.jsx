@@ -1,4 +1,4 @@
-import {Accordion, Card, Row, Col, Button, Image} from "react-bootstrap";
+import {Accordion, Card, Row, Col, Button, Image, Spinner} from "react-bootstrap";
 import React, { useState, useEffect, useRef } from 'react';
 import useCampaigns from '../hooks/useCampaigns';
 
@@ -23,7 +23,7 @@ function GameWindow({ Game, responseLoading }) {
                     </Col> : null}
                 </Row>
             ))}
-            {responseLoading ? <Image src="/loading.gif" alt="Loading..." width={55} height={55}/> : null}
+            {responseLoading ? <Spinner animation="border" role="status"/> : null}
             <div ref={endOfCard} />
         </>
     );

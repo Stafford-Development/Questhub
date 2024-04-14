@@ -1,4 +1,4 @@
-import {Accordion, Card, Row, Col, Button} from "react-bootstrap";
+import {Accordion, Card, Row, Col, Button, Spinner} from "react-bootstrap";
 import React, { useState, useEffect } from 'react';
 import useCampaigns from '../hooks/useCampaigns';
 import DeleteGameModal from './DeleteGameModal';
@@ -6,13 +6,15 @@ import DeleteGameModal from './DeleteGameModal';
 
 function CampaignAccordion({campaigns, setCampaigns, handleShow, setIsNewGameModal, setCampaignId, setCampaignName}) {
     const { fetchCampaigns } = useCampaigns();
-
+    const [isLoading, setIsLoading] = useState(true);
     
 
     useEffect(() => {
         const getCampaigns = async () => {
+            setIsLoading(true);
             const response = await fetchCampaigns();
             setCampaigns(response);
+            setIsLoading(false);
         };
         getCampaigns();
     }, []);
@@ -28,13 +30,16 @@ function CampaignAccordion({campaigns, setCampaigns, handleShow, setIsNewGameMod
         handleShow();
     }
 
-
+    if (isLoading) {
+        return <Spinner animation="border" role="status"/>;
+    }
+    
     return (
         <Accordion className="campaign-card">
-            {campaigns.map((campaign, index) => (
+            {campaigns.map((campaign) => (
                 <Row key={campaign._id} className="mt-4 mx-auto">
                     <Col md={11}>
-                        <Accordion.Item eventKey={index.toString()}>
+                        <Accordion.Item eventKey={campaign._id}>
                             <Accordion.Header>{campaign.title}</Accordion.Header>
                             <Accordion.Body>
                                 {campaign.description}
