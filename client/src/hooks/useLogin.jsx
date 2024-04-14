@@ -1,11 +1,12 @@
+
 import { useState } from 'react';
 
 const useLogin = ({ setLoggedIn }) => {
-  const [loading, setLoading] = useState(false);
+  //const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const login = async (email, password) => {
-    setLoading(true);
+    //setLoading(true);
     setError(null);
 
     try {
@@ -35,12 +36,12 @@ const useLogin = ({ setLoggedIn }) => {
     } catch (error) {
       setError(error.message);
     } finally {
-      setLoading(false);
+      //setLoading(false);
     }
   };
 
   const checkLogin = async () => {
-    setLoading(true);
+    //setLoading(true);
     setError(null);
 
     try {
@@ -72,11 +73,11 @@ const useLogin = ({ setLoggedIn }) => {
     } catch (error) {
       setError(error.message);
     } finally {
-      setLoading(false);
+      //setLoading(false);
     }
   };
   const logout = async () => {
-    setLoading(true);
+    //setLoading(true);
     setError(null);
 
     try {
@@ -108,11 +109,12 @@ const useLogin = ({ setLoggedIn }) => {
     } catch (error) {
       setError(error.message);
     } finally {
-      setLoading(false);
+     // setLoading(false);
     }
   };
+  
   const createUser = async (email, password) => {
-    setLoading(true);
+   // setLoading(true);
     setError(null);
 
     try {
@@ -142,11 +144,80 @@ const useLogin = ({ setLoggedIn }) => {
     } catch (error) {
       setError(error.message);
     } finally {
+      //setLoading(false);
+    }
+  };
+  const sendConfirmationEmail = async () => {
+   // setLoading(true);
+    setError(null);
+
+    try {
+      // Make API call to login endpoint
+      const response = await fetch('http://localhost:3000/api/send-email', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Login failed');
+      }
+      const data = await response.json();
+      // Handle successful login
+      if (data.success) {
+        setLoggedIn(true);
+      }
+      else {
+        setLoggedIn(false);
+      }
+      // ...
+
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      //setLoading(false);
+    }
+  };
+  const checkConfirmed = async (setConfirmed, setLoading) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      
+      // Make API call to login endpoint
+      const response = await fetch('http://localhost:3000/api/check-confirmed', {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Login failed');
+      }
+      const data = await response.json();
+      // Handle successful login
+      if (data.confirmed) {
+        setConfirmed(true);
+      }
+      else {
+        setConfirmed(false);
+      }
+      
+      // ...
+
+    } catch (error) {
+      setError(error.message);
+    } finally {
       setLoading(false);
     }
   };
   //return { loading, error, login };
-  return { login, checkLogin, logout, createUser };
+  return { login, checkLogin, logout, createUser, sendConfirmationEmail, checkConfirmed };
 };
+
 
 export default useLogin;

@@ -2,7 +2,7 @@ import express from 'express';
 import OpenAI from "openai";
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
-import { createCampaign, updateCampaign, confirmUser, readCampaign, createUser, getUser, viewUserCampaigns, deleteCampaign, emailConfirmation } from '../database/db.js'
+import { createCampaign, updateCampaign, confirmUser, readCampaign, createUser, getUser, viewUserCampaigns, deleteCampaign, emailConfirmation, retrieveEmail, checkConfirmed } from '../database/db.js'
 
 dotenv.config();
 
@@ -53,6 +53,11 @@ router.post('/chat', async (req, res) => {
       await emailConfirmation(email);
       res.send(user);
     });
+  });
+  router.post('/send-email', async (req, res) => {
+    const email = await retrieveEmail(req.session.userId);
+    await emailConfirmation(email);
+    res.send({success: true});
   });
   router.post('/login-user', async (req, res) => {
     const email = req.body.email;
@@ -116,7 +121,10 @@ router.post('/chat', async (req, res) => {
     res.redirect('http://localhost:5173/ConfirmationSuccess');
 
   });
-  
+  router.get('/check-confirmed', async (req, res) => {
+    const confirmed = await checkConfirmed(req.session.userId);
+    res.send({confirmed: confirmed});
+  });
   //router.post('/start-adventure', async (req, res) => {
     // Start a new adventure
     // Send the initial response from the AI Dungeon Master back to the client

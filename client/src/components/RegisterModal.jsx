@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 function RegisterModal({show, handleClose, setLoggedIn}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [password2, setPassword2] = useState('');;
+    const [password2, setPassword2] = useState('');
     const {createUser} = useLogin(setLoggedIn);
     const [showPasswordAlert, setShowPasswordAlert] = useState(false);
     const [showEmailAlert, setShowEmailAlert] = useState(false);
@@ -101,7 +101,7 @@ function RegisterModal({show, handleClose, setLoggedIn}) {
                 </Form>
             </Modal.Body>
             <Modal.Footer className="justify-content-center">
-                <Button variant="primary" onClick={() => register(email, password, password2)} >
+                <Button variant="dark" onClick={() => register(email, password, password2)} >
                     Sign Up
                 </Button>
             </Modal.Footer>

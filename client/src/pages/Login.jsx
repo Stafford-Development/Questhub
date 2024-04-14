@@ -45,11 +45,10 @@ function Login({ setLoggedIn }) {
                         }}>
                           Log In
                         </Button>
-                        <Button variant="dark" type="submit" className='mx-auto d-block' onClick={(event) => {
+                        <Button variant="dark" type="button" className='mx-auto d-block' onClick={(event) => {
                           event.preventDefault();
                           handleShow()
-                          
-                          }}>
+                        }}>
                           Register
                         </Button>
                       </Form>

@@ -12,24 +12,31 @@ import CreateCampaign from './pages/CreateCampaign';
 import Campaigns from './pages/Campaigns';
 import Game from './pages/Game';
 import ConfirmationSuccess from './pages/ConfirmationSuccess';
-
+import ConfirmationLoading from './pages/ConfirmationLoading';
 
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
-  const {checkLogin, logout} = useLogin({setLoggedIn: setLoggedIn});
+  const [confirmed, setConfirmed] = useState(false);
+  const {checkLogin, logout, sendConfirmationEmail, checkConfirmed} = useLogin({setLoggedIn: setLoggedIn});
   useEffect(() => { checkLogin().finally(() => setLoading(false)) }, []);
+  useEffect(() => { 
+    if (loggedIn) {
+      checkConfirmed(setConfirmed, setLoading).finally(() => setLoading(false));
+    }
+  }, [loggedIn]);
   if (loading) return <Spinner animation="border" role="status"/>;
+
   return (
     <Router>
       {loggedIn ? <Header logout={logout}/> : null}
       <Routes>
-        <Route path="/" element={loggedIn ? <Campaigns/> : <Navigate to="/login" />} />
+        <Route path="/confirmation-loading" element={loggedIn ? (!confirmed ? <ConfirmationLoading sendConfirmationEmail={sendConfirmationEmail}/> : <Navigate to="/"/>) : <Navigate to="/login"/>}/>
+        <Route path="/" element={loggedIn ? (confirmed ? <Campaigns/> : <Navigate to="/confirmation-loading" />) : <Navigate to="/login" />} />
         <Route path="/login" element={ !loggedIn ? <Login setLoggedIn={setLoggedIn} /> : <Navigate to="/" />}/>
-        <Route path="/create-campaign" element= {<CreateCampaign/>}/>
-        <Route path="/Game/:campaignId" element= {loggedIn ? <Game/> : <Navigate to="/login" />}/>
-        <Route path="/ConfirmationSuccess" element= {<ConfirmationSuccess/>} />
+        <Route path="/Game/:campaignId" element= {loggedIn ? (confirmed ? <Game/> : <Navigate to="/confirmation-loading" />) : <Navigate to="/login" />}/>
+        <Route path="/ConfirmationSuccess" element= {<ConfirmationSuccess />} />
       </Routes>
     </Router>
   )

@@ -30,6 +30,11 @@ export const createUser = async (email, password) => {
     console.error('Error creating user', error);
   }
 };
+export const retrieveEmail = async (userId) => {
+  const _id = userId;
+  const user = await User.findOne({ _id});
+  return user.email;
+} 
 export const emailConfirmation = async (email) => {
   const user = await User.findOne({ email: email });
   user.token = crypto.randomBytes(20).toString('hex');
@@ -63,7 +68,11 @@ export const emailConfirmation = async (email) => {
   return user;
 }
 
-
+export const checkConfirmed = async (userId) => {
+  const _id = userId;
+  const user = await User.findOne({ _id });
+  return user.isEmailConfirmed;
+}
 export const confirmUser = async (token) => {
   const user = await User.findOne({ token: token });
 
