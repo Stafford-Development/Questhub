@@ -18,6 +18,7 @@ export const createUser = async (email, password) => {
     const user = new User({
       email,
       password,
+      apiKey: undefined,
       token: undefined,
       isEmailConfirmed: false,
       campaigns: []
@@ -31,65 +32,83 @@ export const createUser = async (email, password) => {
   }
 };
 export const retrieveEmail = async (userId) => {
+  try {
   const _id = userId;
   const user = await User.findOne({ _id});
   return user.email;
+  } catch (error) {
+    console.error('Error retrieving email', error);
+  }
 } 
 export const emailConfirmation = async (email) => {
-  const user = await User.findOne({ email: email });
-  user.token = crypto.randomBytes(20).toString('hex');
-  await user.save();
+  try {
+    const user = await User.findOne({ email: email });
+    user.token = crypto.randomBytes(20).toString('hex');
+    await user.save();
 
-  let transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL_ADDRESS,
-      pass: process.env.EMAIL_PASSWORD
-    }
-  });
+    let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_ADDRESS,
+        pass: process.env.EMAIL_PASSWORD
+      }
+    });
 
-  let mailOptions = {
-    from: 'questerwebsite@gmail.com',
-    to: email,
-    subject: 'Email Confirmation',
-    html: `
-      <h2>Please click on the link to confirm your email</h2>
-      <a href="http://localhost:3000/api/confirm-email/${user.token}">Confirm Email</a>
-    `
-  };
+    let mailOptions = {
+      from: 'questerwebsite@gmail.com',
+      to: email,
+      subject: 'Email Confirmation',
+      html: `
+        <h2>Please click on the link to confirm your email</h2>
+        <a href="http://localhost:3000/api/confirm-email/${user.token}">Confirm Email</a>
+      `
+    };
 
-  transporter.sendMail(mailOptions, function(error, info){
-    if (error) {
-      console.log(error);
-    } else {
-      console.log('Email sent: ' + info.response);
-    }
-  });
-  return user;
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+    return user;
+  } catch (error) {
+    console.error('Error sending email confirmation', error);
+  }
 }
 
 export const checkConfirmed = async (userId) => {
-  const _id = userId;
-  const user = await User.findOne({ _id });
-  return user.isEmailConfirmed;
-}
-export const confirmUser = async (token) => {
-  const user = await User.findOne({ token: token });
-
-  if (!user) {
-    return res.status(400).send({ message: 'Invalid confirmation token.' });
+  try {
+    const _id = userId;
+    const user = await User.findOne({ _id });
+    return user.isEmailConfirmed;
+    } 
+  catch (error) {
+      console.error('Error checking confirmation', error);
+    }
   }
+export const confirmUser = async (token) => {
+  try {
+    const user = await User.findOne({ token: token });
 
-  // Set the user's isEmailConfirmed field to true
-  user.isEmailConfirmed = true;
+    if (!user) {
+      return res.status(400).send({ message: 'Invalid confirmation token.' });
+    }
 
-  // Clear the emailConfirmationToken field
-  user.token = undefined;
+    // Set the user's isEmailConfirmed field to true
+    user.isEmailConfirmed = true;
 
-  // Save the user
-  await user.save();
+    // Clear the emailConfirmationToken field
+    user.token = undefined;
 
-  return user;
+    // Save the user
+    await user.save();
+
+    return user;
+  }
+  catch (error) {
+    console.error('Error confirming user', error);
+  }
 }
 
 export const getUser = async (email) => {
@@ -174,11 +193,37 @@ export const deleteCampaign = async (userId, campaignId) => {
     return campaign;
 
   } catch (error) {
-    console.error('Error deleting campaign', error);
+    console.error('Error deleting campaign', error);                                               
   }
 };
 
-/*export const deleteUser = async (username, password) => {
+export const readApiKey = async (userId) => {
+  try {
+    const _id = userId;
+    const user = await User.findOne({ _id });
+    console.log('API Key found:', user.apiKey);
+    return user.apiKey;
+
+  } catch (error) {
+    console.error('Error reading API Key', error);
+  }
+}
+
+export const uploadAPIKey = async (userId, apiKey) => {
+  try {
+    const _id = userId;
+    const user = await User.findOne({ _id });
+    user.apiKey = apiKey;
+    await user.save();
+    console.log('API Key uploaded successfully');
+    return user;
+  }
+  catch (error) {
+    console.error('Error uploading API Key', error);
+  }
+}
+
+/*export const deleteUser = async (userId) => {
   try {
     const user = await User.findOneAndDelete({ username, password });
     console.log('User deleted...');

@@ -2,15 +2,12 @@ import express from 'express';
 import OpenAI from "openai";
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
-import { createCampaign, updateCampaign, confirmUser, readCampaign, createUser, getUser, viewUserCampaigns, deleteCampaign, emailConfirmation, retrieveEmail, checkConfirmed } from '../database/db.js'
+import { createCampaign, updateCampaign, confirmUser, readCampaign, createUser, getUser, viewUserCampaigns, deleteCampaign, emailConfirmation, retrieveEmail, checkConfirmed, readApiKey, uploadAPIKey } from '../database/db.js'
 
 dotenv.config();
 
-const APIKey = process.env.OPENAI_API_KEY;
 const router = express.Router();
 const saltingRounds = 10;
-
-const openai = new OpenAI({apiKey: APIKey});
 
 let messageContent = "";
 
@@ -18,6 +15,8 @@ let messageContent = "";
 
 
 router.post('/chat', async (req, res) => {
+    const apiKey = await readApiKey(req.session.userId);
+    const openai = new OpenAI({apiKey: apiKey});
     const campaign = await readCampaign(req.session.userId, req.body.campaignId);
     let conversationHistory = campaign.log;
     conversationHistory.push({role: "user", content: req.body.message});
@@ -125,14 +124,18 @@ router.post('/chat', async (req, res) => {
     const confirmed = await checkConfirmed(req.session.userId);
     res.send({confirmed: confirmed});
   });
-  //router.post('/start-adventure', async (req, res) => {
-    // Start a new adventure
-    // Send the initial response from the AI Dungeon Master back to the client
-  //});
-  
-  //router.post('/continue-adventure', async (req, res) => {
-    // Continue the adventure based on the user's input
-    // Send the response from the AI Dungeon Master back to the client
-  //});
+  router.post('/upload-api-key', async (req, res) => {
+    const apiKey = req.body.apiKey;
+    const user = await uploadAPIKey(req.session.userId, apiKey);
+    res.send(user);
+  });
+  router.get('/check-api-key', async (req, res) => {
+    const apiKey = await readApiKey(req.session.userId);
+    if (apiKey) {
+      res.send({apiKeyValid: true});
+    }
+    else{res.send({apiKeyValid: false})};
+  });
+
   
 export default router;

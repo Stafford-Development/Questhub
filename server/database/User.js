@@ -10,6 +10,7 @@ const UserSchema = new mongoose.Schema({
     email: {type: String, unique: true},
     password: String,
     token: String,
+    apiKey: String,
     isEmailConfirmed: { type: Boolean, default: false },
     campaigns: [CampaignSchema]
 });

@@ -35,7 +35,7 @@ function App() {
         <Route path="/confirmation-loading" element={loggedIn ? (!confirmed ? <ConfirmationLoading sendConfirmationEmail={sendConfirmationEmail}/> : <Navigate to="/"/>) : <Navigate to="/login"/>}/>
         <Route path="/" element={loggedIn ? (confirmed ? <Campaigns/> : <Navigate to="/confirmation-loading" />) : <Navigate to="/login" />} />
         <Route path="/login" element={ !loggedIn ? <Login setLoggedIn={setLoggedIn} /> : <Navigate to="/" />}/>
-        <Route path="/Game/:campaignId" element= {loggedIn ? (confirmed ? <Game/> : <Navigate to="/confirmation-loading" />) : <Navigate to="/login" />}/>
+        <Route path="/Game/:campaignId" element= {loggedIn ? <Game/> : <Navigate to="/login" />}/>
         <Route path="/ConfirmationSuccess" element= {<ConfirmationSuccess />} />
       </Routes>
     </Router>

@@ -2,17 +2,22 @@ import {Accordion, Card, Row, Col, Button, Spinner} from "react-bootstrap";
 import React, { useState, useEffect } from 'react';
 import useCampaigns from '../hooks/useCampaigns';
 import DeleteGameModal from './DeleteGameModal';
+import useUserSettings from "../hooks/useUserSettings";
 
 
 function CampaignAccordion({campaigns, setCampaigns, handleShow, setIsNewGameModal, setCampaignId, setCampaignName}) {
     const { fetchCampaigns } = useCampaigns();
+    const { checkApiKey } = useUserSettings();
     const [isLoading, setIsLoading] = useState(true);
+    const [apiKeyValid, setApiKeyValid] = useState(false);
     
 
     useEffect(() => {
         const getCampaigns = async () => {
             setIsLoading(true);
             const response = await fetchCampaigns();
+            const apiKeyResponse = await checkApiKey();
+            setApiKeyValid(apiKeyResponse.apiKeyValid);
             setCampaigns(response);
             setIsLoading(false);
         };
@@ -32,6 +37,14 @@ function CampaignAccordion({campaigns, setCampaigns, handleShow, setIsNewGameMod
 
     if (isLoading) {
         return <Spinner animation="border" role="status"/>;
+    }
+    if (!apiKeyValid) {
+        return <Card className="mt-4 mx-auto">
+            
+            Please upload your API key in settings to continue.
+            <Button href="/Settings" variant="dark">Settings</Button>
+        
+        </Card>
     }
     
     return (
