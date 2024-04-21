@@ -55,8 +55,12 @@ function CampaignAccordion({campaigns, setCampaigns, handleShow, setIsNewGameMod
                         <Accordion.Item eventKey={campaign._id}>
                             <Accordion.Header>{campaign.title}</Accordion.Header>
                             <Accordion.Body>
-                                {campaign.description}
-                                <Button onClick={() => toggleDeleteGameModal(campaign._id, campaign.title)}>Delete</Button>
+                                <Row className="justify-content-center">
+                                    {campaign.description}
+                                </Row>
+                                    <hr></hr>
+                                    <Button onClick={() => toggleDeleteGameModal(campaign._id, campaign.title)}>Delete</Button>
+                               
                             </Accordion.Body>
                         </Accordion.Item>
                     </Col>
