@@ -216,10 +216,25 @@ export const uploadAPIKey = async (userId, apiKey) => {
     user.apiKey = apiKey;
     await user.save();
     console.log('API Key uploaded successfully');
-    return user;
+    return true;
   }
   catch (error) {
     console.error('Error uploading API Key', error);
+    return false;
+  }
+}
+export const deleteAPIKey = async (userId) => {
+  try {
+    const _id = userId;
+    const user = await User.findOne({ _id });
+    user.apiKey = undefined;
+    await user.save();
+    console.log('API Key deleted...');
+    return true;
+  }
+  catch (error) {
+    console.error('Error deleting API Key', error);
+    return false;
   }
 }
 

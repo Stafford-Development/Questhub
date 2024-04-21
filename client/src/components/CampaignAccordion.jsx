@@ -39,10 +39,10 @@ function CampaignAccordion({campaigns, setCampaigns, handleShow, setIsNewGameMod
         return <Spinner animation="border" role="status"/>;
     }
     if (!apiKeyValid) {
-        return <Card className="mt-4 mx-auto">
+        return <Card className="mt-4 ">
             
-            Please upload your API key in settings to continue.
-            <Button href="/Settings" variant="dark">Settings</Button>
+            Please upload a valid openai API key in settings to continue.
+            <Button href="/settings" variant="dark">Settings</Button>
         
         </Card>
     }

@@ -2,7 +2,7 @@ import express from 'express';
 import OpenAI from "openai";
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
-import { createCampaign, updateCampaign, confirmUser, readCampaign, createUser, getUser, viewUserCampaigns, deleteCampaign, emailConfirmation, retrieveEmail, checkConfirmed, readApiKey, uploadAPIKey } from '../database/db.js'
+import { createCampaign, updateCampaign, confirmUser, readCampaign, createUser, getUser, viewUserCampaigns, deleteCampaign, emailConfirmation, retrieveEmail, checkConfirmed, readApiKey, uploadAPIKey, deleteAPIKey } from '../database/db.js'
 
 dotenv.config();
 
@@ -126,16 +126,38 @@ router.post('/chat', async (req, res) => {
   });
   router.post('/upload-api-key', async (req, res) => {
     const apiKey = req.body.apiKey;
-    const user = await uploadAPIKey(req.session.userId, apiKey);
-    res.send(user);
+    try {
+      const openai = new OpenAI({apiKey: apiKey});
+      const engine = await openai.models.list();
+      if (engine){
+        const result = await uploadAPIKey(req.session.userId, apiKey);
+        res.send({apiKeyValid: true});
+      }
+      else {
+        res.send({apiKeyValid: false});
+      }
+    }
+    catch (error) {
+      res.send({apiKeyValid: false});
+    }
   });
   router.get('/check-api-key', async (req, res) => {
     const apiKey = await readApiKey(req.session.userId);
-    if (apiKey) {
-      res.send({apiKeyValid: true});
+    try{
+      const openai = new OpenAI({apiKey: apiKey});
+      const engine = await openai.models.list();
+      if (engine) {
+        res.send({apiKeyValid: true});
+      }
+      else{res.send({apiKeyValid: false})};
     }
-    else{res.send({apiKeyValid: false})};
+    catch (error) {
+      res.send({apiKeyValid: false});
+    }
   });
-
+  router.post('/delete-api-key', async (req, res) => {
+    const result = await deleteAPIKey(req.session.userId);
+    res.send({apiKeyDeleted: result});
+  });
   
 export default router;
