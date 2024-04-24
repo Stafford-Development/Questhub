@@ -30,7 +30,7 @@ function Settings() {
             <Container fluid className="login-container"> 
                 <Card style={{height: "7vh", border: 'none'}}>
                     <Card.Body>
-                       Settings
+                    <h1 style={{ fontSize: '2rem' }}>Settings</h1>
                     </Card.Body>
                 </Card>
                 <Card style={{ boxShadow: 'inset 0 0 10px #000000', height: "87vh", overflow: 'auto' }}>

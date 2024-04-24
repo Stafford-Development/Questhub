@@ -21,7 +21,7 @@ function Campaigns() {
             <Container fluid className="login-container"> 
                 <Card style={{height: "7vh", border: 'none'}}>
                     <Card.Body>
-                       Campaigns
+                    <h1 style={{ fontSize: '2rem' }}>Campaigns</h1>
                     </Card.Body>
                 </Card>
                 <Card style={{ boxShadow: 'inset 0 0 10px #000000', height: "87vh", overflow: 'auto', backgroundImage: 'url("Page.jpg")'  }}>
