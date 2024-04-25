@@ -12,7 +12,7 @@ app.use(cors({
 app.use(express.json()); 
 
 app.use(session({
-    secret: 'Quest of the Ancients',
+    secret: 'NOT_A_GOOD_SECRET',
     resave: false,
     saveUninitialized: true,
     cookie: { 

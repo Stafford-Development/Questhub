@@ -12,9 +12,9 @@ const ProfilePopup = ({ profilePicUrl, logout }) => {
       </Dropdown.Toggle>
 
       <Dropdown.Menu align="end">
-        <Dropdown.Item className='text-center' href="#/action-1">Settings</Dropdown.Item>
+        <Dropdown.Item className='text-center' href="/settings">Settings</Dropdown.Item>
         <Dropdown.Divider />
-        <Dropdown.Item className='text-center' href="#/action-2" onClick={(event) => {
+        <Dropdown.Item className='text-center' onClick={(event) => {
           event.preventDefault();
           logout();
         }}>Logout</Dropdown.Item>
