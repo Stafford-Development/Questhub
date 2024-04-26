@@ -54,39 +54,56 @@ router.post('/chat', async (req, res) => {
     });
   });
   router.post('/send-email', async (req, res) => {
+    try {
     const email = await retrieveEmail(req.session.userId);
     await emailConfirmation(email);
     res.send({success: true});
+    }
+    catch (error) {
+      res.send({success: false});
+    }
   });
   router.post('/login-user', async (req, res) => {
-    const email = req.body.email;
-    const password = req.body.password;
+    try {
+      const email = req.body.email;
+      const password = req.body.password;
 
-    const user = await getUser(email);
-    const hash = user.password;
-    bcrypt.compare(password, hash, function(err, result) {
-      if (result) {
-        req.session.userId = user._id;
-        res.send({success: true});
-      } else {
-        res.send({success: false});
-      }
-    });
+      const user = await getUser(email);
+      const hash = user.password;
+      bcrypt.compare(password, hash, function(err, result) {
+        if (result) {
+          req.session.userId = user._id;
+          res.send({success: true});
+        } else {
+          res.send({success: false});
+        }
+      });
+    } catch (error) {
+      res.send({success: false});
+    }
   });
   router.get('/logout', (req, res) => {
-    req.session.destroy(err => {
-      if(err) {
-        res.send({loggedOut: false});
-      }
-      res.clearCookie('connect.sid');
-      res.send({loggedOut: true});
+    try {
+      req.session.destroy(err => {
+        if(err) {
+          res.send({loggedOut: false});
+        }
+        res.clearCookie('connect.sid');
+        res.send({loggedOut: true});
     });
+    } catch (error) {
+      res.send({loggedOut: false});
+    }
   });
 
   router.get('/check-login', (req, res) => {
-    if (req.session.userId) {
-      res.send({ loggedIn: true, userId: req.session.userId });
-    } else {
+    try {
+      if (req.session.userId) {
+        res.send({ loggedIn: true, userId: req.session.userId });
+      } else {
+        res.send({ loggedIn: false });
+      }
+    } catch (error) {
       res.send({ loggedIn: false });
     }
   });
@@ -112,13 +129,16 @@ router.post('/chat', async (req, res) => {
     res.send(campaign);
   });
   router.get('/confirm-email/:token', async (req, res) => {
-    const token = req.params.token;
-  
-    const user = await confirmUser(token);
-  
-    // Redirect the user to the login page, or send a success message
-    res.redirect('http://localhost:5173/ConfirmationSuccess');
-
+    try {
+      const token = req.params.token;
+    
+      const user = await confirmUser(token);
+    
+      // Redirect the user to the login page, or send a success message
+      res.redirect('http://localhost:5173/ConfirmationSuccess');
+    } catch (error) {
+      res.send({message: 'Error confirming email'});
+    }
   });
   router.get('/check-confirmed', async (req, res) => {
     const confirmed = await checkConfirmed(req.session.userId);
