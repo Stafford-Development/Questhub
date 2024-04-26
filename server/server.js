@@ -10,13 +10,14 @@ app.use(cors({
   credentials: true
 }));
 app.use(express.json()); 
+const SESSION_SECRET = process.env.SESSION_SECRET;
 
 app.use(session({
-    secret: 'NOT_A_GOOD_SECRET',
+    secret: SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: { 
-        secure: false,
+        secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
         maxAge: 24 * 60 * 60 * 1000,
         httpOnly: true
@@ -28,6 +29,10 @@ app.use('/api', dungeonMasterRoutes);
 
 connectDB();
 
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).send('Server Error');
+});
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Server is running on port ${port}`));
