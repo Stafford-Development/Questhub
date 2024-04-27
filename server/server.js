@@ -1,16 +1,26 @@
 import express from 'express';
 import cors from 'cors';
+import path from 'path';
 import dungeonMasterRoutes from './routes/dungeonMaster.routes.js';
 import { connectDB } from './database/db.js';
 import session from 'express-session';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
 const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: 'http://localhost:3000',
   credentials: true
 }));
 app.use(express.json()); 
 const SESSION_SECRET = process.env.SESSION_SECRET;
+
+app.use(express.static(path.resolve(__dirname, '..', 'client', 'dist')));
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '..', 'client', 'dist', 'index.html'));
+});
 
 app.use(session({
     secret: SESSION_SECRET,
