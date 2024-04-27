@@ -1,5 +1,5 @@
 import { Navbar, Nav, NavDropdown, Container, Row, Col, Image} from 'react-bootstrap';
-import ProfilePopup from './profilePopup.jsx';
+import ProfilePopup from './ProfilePopup.jsx';
 import '../styling/App.css'
 import { Link } from 'react-router-dom';
 
