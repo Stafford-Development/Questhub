@@ -3,6 +3,7 @@ module.exports = {
       {
         name: 'server',
         script: './server/server.js',
+        watch: true,
         env: {
           NODE_ENV: 'development',
         },
