@@ -3,7 +3,7 @@ import { useState } from 'react';
 const useUserSettings = () => {
     const checkApiKey = async () => {
         try {
-        const response = await fetch('http://localhost:3000/api/check-api-key', {
+        const response = await fetch('/api/check-api-key', {
             method: 'GET',
             credentials: 'include',
             headers: {
@@ -19,7 +19,7 @@ const useUserSettings = () => {
     };
     const uploadApiKey = async (apiKey) => {
         try {
-        const response = await fetch('http://localhost:3000/api/upload-api-key', {
+        const response = await fetch('/api/upload-api-key', {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -36,7 +36,7 @@ const useUserSettings = () => {
     };
     const deleteApiKey = async () => {
         try {
-          const response = await fetch('http://localhost:3000/api/delete-api-key', {
+          const response = await fetch('/api/delete-api-key', {
               method: 'POST',
               credentials: 'include',
               headers: {

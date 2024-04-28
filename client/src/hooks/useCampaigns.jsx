@@ -5,7 +5,7 @@ const useCampaigns = () => {
     
     const fetchCampaigns = async () => {
         try {
-        const response = await fetch('http://localhost:3000/api/view-campaigns', {
+        const response = await fetch('/api/view-campaigns', {
             method: 'GET',
             credentials: 'include',
             headers: {
@@ -22,7 +22,7 @@ const useCampaigns = () => {
     };
     const createCampaign = async (title, description) => {
         try {
-        const response = await fetch('http://localhost:3000/api/create-campaign', {
+        const response = await fetch('/api/create-campaign', {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -40,7 +40,7 @@ const useCampaigns = () => {
     };
     const readCampaign = async (campaignId) => {
         try {
-        const response = await fetch(`http://localhost:3000/api/read-campaign`, {
+        const response = await fetch(`/api/read-campaign`, {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -58,7 +58,7 @@ const useCampaigns = () => {
     };
     const chatCampaign = async (campaignId, message) => {
         try {
-        const response = await fetch('http://localhost:3000/api/chat', {
+        const response = await fetch('/api/chat', {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -76,7 +76,7 @@ const useCampaigns = () => {
     };
     const updateCampaign = async (campaignId, log) => {
         try {
-        const response = await fetch('http://localhost:3000/api/update-campaign', {
+        const response = await fetch('/api/update-campaign', {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -94,7 +94,7 @@ const useCampaigns = () => {
     };
     const deleteCampaign = async (campaignId) => {
         try {
-        const response = await fetch('http://localhost:3000/api/delete-campaign', {
+        const response = await fetch('/api/delete-campaign', {
             method: 'POST',
             credentials: 'include',
             headers: {

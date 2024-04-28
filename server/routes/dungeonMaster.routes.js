@@ -135,7 +135,7 @@ router.post('/chat', async (req, res) => {
       const user = await confirmUser(token);
     
       // Redirect the user to the login page, or send a success message
-      res.redirect('http://localhost:5173/ConfirmationSuccess');
+      res.redirect(`${process.env.BASE_URL}/ConfirmationSuccess`);
     } catch (error) {
       res.send({message: 'Error confirming email'});
     }
