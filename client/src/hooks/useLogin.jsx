@@ -11,7 +11,7 @@ const useLogin = ({ setLoggedIn }) => {
 
     try {
       // Make API call to login endpoint
-      const response = await fetch('http://localhost:3000/api/login-user', {
+      const response = await fetch('/api/login-user', {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -46,7 +46,7 @@ const useLogin = ({ setLoggedIn }) => {
 
     try {
       // Make API call to check-login endpoint
-      const response = await fetch('http://localhost:3000/api/check-login', {
+      const response = await fetch('/api/check-login', {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -82,7 +82,7 @@ const useLogin = ({ setLoggedIn }) => {
 
     try {
       // Make API call to check-login endpoint
-      const response = await fetch('http://localhost:3000/api/logout', {
+      const response = await fetch('/api/logout', {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -119,7 +119,7 @@ const useLogin = ({ setLoggedIn }) => {
 
     try {
       // Make API call to login endpoint
-      const response = await fetch('http://localhost:3000/api/create-user', {
+      const response = await fetch('/api/create-user', {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -153,7 +153,7 @@ const useLogin = ({ setLoggedIn }) => {
 
     try {
       // Make API call to login endpoint
-      const response = await fetch('http://localhost:3000/api/send-email', {
+      const response = await fetch('/api/send-email', {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -187,7 +187,7 @@ const useLogin = ({ setLoggedIn }) => {
     try {
       
       // Make API call to login endpoint
-      const response = await fetch('http://localhost:3000/api/check-confirmed', {
+      const response = await fetch('/api/check-confirmed', {
         method: 'GET',
         credentials: 'include',
         headers: {
