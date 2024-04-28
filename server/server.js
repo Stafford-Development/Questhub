@@ -13,6 +13,10 @@ const __dirname = dirname(__filename);
 const buildPath = path.join(__dirname, ".." ,'client', 'dist');
 app.use(express.static(buildPath));
 
+app.use(cors({
+  origin: 'http://localhost:3000', // replace with your client's origin
+  credentials: true
+}));
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname,"../client/dist/index.html"));
 
@@ -32,7 +36,7 @@ app.use(session({
     saveUninitialized: true,
     cookie: { 
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'None',
+        sameSite: 'none',
         maxAge: 24 * 60 * 60 * 1000,
         httpOnly: true
      
