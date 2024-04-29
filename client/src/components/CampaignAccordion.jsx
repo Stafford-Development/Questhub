@@ -50,9 +50,9 @@ function CampaignAccordion({campaigns, setCampaigns, handleShow, setIsNewGameMod
     
     return (
         <Accordion className="campaign-card">
-             <Card variant="dark"><Card.Body><Button className="mt-4" onClick={toggleNewGameModal} variant="secondary" >Create New Game</Button></Card.Body></Card>
+             <Card bg="dark"><Card.Body><Button className="mt-4" onClick={toggleNewGameModal} variant="secondary" >Create New Game</Button></Card.Body></Card>
             {campaigns.map((campaign) => (
-                <Card variant="dark">
+                <Card bg="dark">
                     <Card.Body>
                             <Accordion.Item eventKey={campaign._id}>
                                 <Accordion.Header>{campaign.title}</Accordion.Header>
@@ -61,14 +61,14 @@ function CampaignAccordion({campaigns, setCampaigns, handleShow, setIsNewGameMod
                                         {campaign.description}
                                     </Row>
                                         <hr></hr>
-                                        <Button variant="secondary" onClick={() => toggleDeleteGameModal(campaign._id, campaign.title)}>Delete</Button>
+                                        <Button variant="dark" onClick={() => toggleDeleteGameModal(campaign._id, campaign.title)}>Delete</Button>
                                 
                                 </Accordion.Body>
                             </Accordion.Item>
                        
                       
                     </Card.Body>
-                    <Card.Footer><Button className="mt-2" variant="dark" href={`/Game/${campaign._id}`}>Enter</Button></Card.Footer>
+                    <Card.Footer><Button className="mt-2" variant="secondary" href={`/Game/${campaign._id}`}>Enter</Button></Card.Footer>
                 </Card>
                 
             ))}
