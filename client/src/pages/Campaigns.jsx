@@ -18,17 +18,8 @@ function Campaigns() {
     return (
         <Container fluid>
             <Image className="login-background" src="/Town.gif"/>  
-            <Container fluid className="login-container"> 
-                <Card style={{height: "7vh", border: 'none'}} className='mb-4'>
-                    <Card.Body>
-                    <h1 style={{ fontSize: '1rem' }}>Campaigns</h1>
-                    </Card.Body>
-                </Card>
-                <Card style={{ boxShadow: 'inset 0 0 10px #000000', height: "87vh", overflow: 'auto', backgroundImage: 'url("Page.jpg")'  }}>
-                    <Card.Body>
-                        <CampaignAccordion campaigns={campaigns} setCampaigns={setCampaigns} handleShow={handleShow} setIsNewGameModal={setIsNewGameModal} setCampaignId={setCampaignId} setCampaignName={setCampaignName}/>
-                    </Card.Body>
-                </Card>
+            <Container fluid className="login-container">
+                <CampaignAccordion campaigns={campaigns} setCampaigns={setCampaigns} handleShow={handleShow} setIsNewGameModal={setIsNewGameModal} setCampaignId={setCampaignId} setCampaignName={setCampaignName}/>
             </Container>
             {isNewGameModal ? <NewGameModal show={show} handleClose={handleClose}/> : <DeleteGameModal show={show} handleClose={handleClose} campaignId={campaignId} campaignName={campaignName} setCampaigns={setCampaigns}/>}
             

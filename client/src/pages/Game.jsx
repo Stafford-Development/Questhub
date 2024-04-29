@@ -45,12 +45,13 @@ function Game() {
         <Container fluid>
             <Image className="login-background" src="/Town.gif"/>  
             <Container fluid className="login-container"> 
-                <Card style={{height: "2vh", fontSize:"30px",textDecoration: 'underline', border: 'none'}}>
+                <Card className='mt-3 mb-2' bg="dark" text="white" style={{ fontSize:"20px",textDecoration: 'underline', border: 'none'}}>
                     <Card.Body> 
                         {Game.title}
                     </Card.Body>
                 </Card>
-                <Card style={{ boxShadow: 'inset 0 0 10px #000000', height: "75vh", overflow: 'auto', backgroundImage: 'url("Page.jpg")'  }}>
+                <Card bg="dark" text="white" style={{ boxShadow: 'inset 0 0 10px #000000', height: "57vh", overflow: 'auto', backgroundImage: 'url("Page.jpg")'  }}>
+                    
                     <Card.Body>
                         <GameWindow Game={Game} responseLoading={responseLoading}/>
                     </Card.Body>

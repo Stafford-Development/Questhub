@@ -28,12 +28,8 @@ function Settings() {
         <Container fluid>
             <Image className="login-background" src="/Town.gif"/>  
             <Container fluid className="login-container"> 
-                <Card style={{height: "7vh", border: 'none'}}>
-                    <Card.Body>
-                    <h1 style={{ fontSize: '2rem' }}>Settings</h1>
-                    </Card.Body>
-                </Card>
-                <Card style={{ boxShadow: 'inset 0 0 10px #000000', height: "87vh", overflow: 'auto' }}>
+                
+                <Card bg="light" style={{ boxShadow: 'inset 0 0 10px #000000', height: "90vh", overflow: 'auto' }}>
                     <Card.Body>
                         <SettingsWindow handleShow={handleShow} apiKeyValid={apiKeyValid} setApiKeyValid={setApiKeyValid}/>
                     </Card.Body>
