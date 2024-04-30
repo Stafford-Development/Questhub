@@ -14,11 +14,11 @@ function DeleteUserModal({show, handleClose}) {
     
     return (
         <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
+            <Modal.Header className="bg-dark text-white" closeButton>
                 <Modal.Title>Delete Account?</Modal.Title>
             </Modal.Header>
-            <Modal.Body>
-                <Button variant="primary" onClick={deleteUserAndClose}>Confirm</Button>
+            <Modal.Body className="d-flex justify-content-center align-items-center">
+                <Button variant="dark" onClick={deleteUserAndClose}>Confirm</Button>
             </Modal.Body>
         </Modal>
     );

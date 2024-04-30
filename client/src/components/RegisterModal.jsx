@@ -75,8 +75,8 @@ function RegisterModal({show, handleClose, setLoggedIn}) {
     
     return (
         <Modal show={show} onHide={manageClose}>
-            <Modal.Header closeButton>
-                <Modal.Title>Sign Up</Modal.Title>
+            <Modal.Header className="bg-dark text-white" closeButton>
+                <Modal.Title>Register</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form>

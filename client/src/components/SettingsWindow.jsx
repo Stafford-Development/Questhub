@@ -43,7 +43,7 @@ function SettingsWindow({handleShow, apiKeyValid, setApiKeyValid, setIsApiModal}
             <Row>
                 <Col className="d-flex align-items-center justify-content-center" md={12}>
                     {apiKeyValid ? <CheckCircle className="me-2"color="green" size={32} /> :  <XCircle className="me-2" color="red" size={32} />}
-                    <h1 style={{ fontSize: '1.2rem', textAlign: 'center' }} className="mt-3 me-2 ">Valid API Key:  
+                    <h1 style={{ fontSize: '1.2rem', textAlign: 'center' }} className="mt-3 me-2 ">Valid OPENAI API Key:  
                     </h1>
                 </Col>
                 <Col md={12}>
