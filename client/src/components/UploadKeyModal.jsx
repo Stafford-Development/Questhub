@@ -22,8 +22,8 @@ function UploadKeyModal({show, handleClose, setApiKeyValid}) {
     
     return (
         <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
-                Upload API Key
+            <Modal.Header className="bg-dark text-white" closeButton>
+                <Modal.Title>Upload API Key</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form>

@@ -15,8 +15,8 @@ function NewGameModal({show, handleClose}) {
     };
     
     return (
-        <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
+        <Modal variant="primary" show={show} onHide={handleClose}>
+            <Modal.Header closeButton className="bg-dark text-white">
                 <Modal.Title>New Game</Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -32,7 +32,7 @@ function NewGameModal({show, handleClose}) {
                 </Form>
             </Modal.Body>
             <Modal.Footer className="justify-content-center">
-                <Button variant="primary" onClick={startGame}>
+                <Button variant="dark" onClick={startGame}>
                     Start Game
                 </Button>
             </Modal.Footer>

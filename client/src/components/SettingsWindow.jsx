@@ -7,11 +7,20 @@ import { CheckCircle, XCircle } from 'react-bootstrap-icons';
 import useUserSettings from "../hooks/useUserSettings";
 
 
-function SettingsWindow({handleShow, apiKeyValid, setApiKeyValid}) {
+function SettingsWindow({handleShow, apiKeyValid, setApiKeyValid, setIsApiModal}) {
     
     const [isLoading, setIsLoading] = useState(true);
    
     const {checkApiKey} = useUserSettings();
+
+    const toggleApiModal = () => {
+        setIsApiModal(true);
+        handleShow();
+    }
+    const toggleDeleteUserModal = () => {
+        setIsApiModal(false);
+        handleShow();
+    }
     
 
     useEffect(() => {
@@ -34,12 +43,20 @@ function SettingsWindow({handleShow, apiKeyValid, setApiKeyValid}) {
             <Row>
                 <Col className="d-flex align-items-center justify-content-center" md={12}>
                     {apiKeyValid ? <CheckCircle className="me-2"color="green" size={32} /> :  <XCircle className="me-2" color="red" size={32} />}
-                    <h1 style={{ fontSize: '1.2rem', textAlign: 'center' }} className="mt-3 me-2 ">Valid API Key:  
+                    <h1 style={{ fontSize: '1.2rem', textAlign: 'center' }} className="mt-3 me-2 ">Valid OPENAI API Key:  
                     </h1>
                 </Col>
                 <Col md={12}>
-                    <Button variant="dark" onClick={handleShow}>Change/Delete API Key</Button>
+                    <Button variant="dark" onClick={toggleApiModal}>Change/Delete API Key</Button>
                     
+                </Col>
+               
+                <hr className="my-4" />
+            </Row>
+            <Row>
+                
+                <Col md={12}>
+                    <Button variant="dark" onClick={toggleDeleteUserModal}>Delete Account</Button>
                 </Col>
                
                 <hr className="my-4" />

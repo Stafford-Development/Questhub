@@ -6,6 +6,7 @@ import DeleteGameModal from '../components/DeleteGameModal';
 import useUserSettings from '../hooks/useUserSettings';
 import SettingsWindow from '../components/SettingsWindow';
 import UploadKeyModal from '../components/UploadKeyModal';
+import DeleteUserModal from '../components/DeleteUserModal';
 
 function Settings() {
     const [campaigns, setCampaigns] = useState([]);
@@ -14,7 +15,7 @@ function Settings() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const [isNewGameModal, setIsNewGameModal] = useState(true);
+    const [isApiModal, setIsApiModal] = useState(true);
 
     const [campaignName, setCampaignName] = useState('');
     const [campaignId, setCampaignId] = useState('');
@@ -28,18 +29,14 @@ function Settings() {
         <Container fluid>
             <Image className="login-background" src="/Town.gif"/>  
             <Container fluid className="login-container"> 
-                <Card style={{height: "7vh", border: 'none'}}>
+                
+                <Card bg="light" style={{ boxShadow: 'inset 0 0 10px #000000', height: "90vh", overflow: 'auto' }}>
                     <Card.Body>
-                    <h1 style={{ fontSize: '2rem' }}>Settings</h1>
-                    </Card.Body>
-                </Card>
-                <Card style={{ boxShadow: 'inset 0 0 10px #000000', height: "87vh", overflow: 'auto' }}>
-                    <Card.Body>
-                        <SettingsWindow handleShow={handleShow} apiKeyValid={apiKeyValid} setApiKeyValid={setApiKeyValid}/>
+                        <SettingsWindow handleShow={handleShow} apiKeyValid={apiKeyValid} setApiKeyValid={setApiKeyValid} setIsApiModal={setIsApiModal}/>
                     </Card.Body>
                 </Card>
             </Container>
-             <UploadKeyModal show={show} handleClose={handleClose} setApiKeyValid={setApiKeyValid}/> 
+             {isApiModal ? <UploadKeyModal show={show} handleClose={handleClose} setApiKeyValid={setApiKeyValid}/> : <DeleteUserModal show={show} handleClose={handleClose}/> }
             
         </Container>
     );
