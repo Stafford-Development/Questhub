@@ -238,12 +238,13 @@ export const deleteAPIKey = async (userId) => {
   }
 }
 
-/*export const deleteUser = async (userId) => {
+export const deleteUser = async (userId) => {
   try {
-    const user = await User.findOneAndDelete({ username, password });
+    const _id = userId;
+    const user = await User.findOneAndDelete({ _id});
     console.log('User deleted...');
     return user;
   } catch (error) {
     console.error('Error deleting user', error);
   }
-};*/
+};

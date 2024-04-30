@@ -50,6 +50,22 @@ const useUserSettings = () => {
           console.error('Error deleting API key.', error);
         }
     };
-    return { checkApiKey, uploadApiKey, deleteApiKey }
+    const deleteUser = async () => {
+        try {
+          const response = await fetch('/api/delete-user', {
+              method: 'POST',
+              credentials: 'include',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
+
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.error('Error deleting user.', error);
+        }
+    };
+    return { checkApiKey, uploadApiKey, deleteApiKey, deleteUser }
 };
 export default useUserSettings;

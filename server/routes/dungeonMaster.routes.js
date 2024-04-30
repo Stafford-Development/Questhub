@@ -2,7 +2,7 @@ import express from 'express';
 import OpenAI from "openai";
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
-import { createCampaign, updateCampaign, confirmUser, readCampaign, createUser, getUser, viewUserCampaigns, deleteCampaign, emailConfirmation, retrieveEmail, checkConfirmed, readApiKey, uploadAPIKey, deleteAPIKey } from '../database/db.js'
+import { createCampaign, updateCampaign, confirmUser, readCampaign, createUser, getUser, viewUserCampaigns, deleteCampaign, emailConfirmation, retrieveEmail, checkConfirmed, readApiKey, uploadAPIKey, deleteAPIKey, deleteUser } from '../database/db.js'
 
 dotenv.config();
 
@@ -179,5 +179,21 @@ router.post('/chat', async (req, res) => {
     const result = await deleteAPIKey(req.session.userId);
     res.send({apiKeyDeleted: result});
   });
+  router.post('/delete-user', async (req, res) => {
+    try {
+      const result = await deleteUser(req.session.userId);
+      req.session.destroy(err => {
+        if(!err) {
+          res.clearCookie('connect.sid');
+          res.send({userDeleted: true});
+        }
+      });
+   
+    } catch (error) {
+      res.send({userDeleted: false});
+    }
+  });
+
+
   
 export default router;

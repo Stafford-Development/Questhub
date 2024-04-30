@@ -6,6 +6,7 @@ import DeleteGameModal from '../components/DeleteGameModal';
 import useUserSettings from '../hooks/useUserSettings';
 import SettingsWindow from '../components/SettingsWindow';
 import UploadKeyModal from '../components/UploadKeyModal';
+import DeleteUserModal from '../components/DeleteUserModal';
 
 function Settings() {
     const [campaigns, setCampaigns] = useState([]);
@@ -14,7 +15,7 @@ function Settings() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const [isNewGameModal, setIsNewGameModal] = useState(true);
+    const [isApiModal, setIsApiModal] = useState(true);
 
     const [campaignName, setCampaignName] = useState('');
     const [campaignId, setCampaignId] = useState('');
@@ -31,11 +32,11 @@ function Settings() {
                 
                 <Card bg="light" style={{ boxShadow: 'inset 0 0 10px #000000', height: "90vh", overflow: 'auto' }}>
                     <Card.Body>
-                        <SettingsWindow handleShow={handleShow} apiKeyValid={apiKeyValid} setApiKeyValid={setApiKeyValid}/>
+                        <SettingsWindow handleShow={handleShow} apiKeyValid={apiKeyValid} setApiKeyValid={setApiKeyValid} setIsApiModal={setIsApiModal}/>
                     </Card.Body>
                 </Card>
             </Container>
-             <UploadKeyModal show={show} handleClose={handleClose} setApiKeyValid={setApiKeyValid}/> 
+             {isApiModal ? <UploadKeyModal show={show} handleClose={handleClose} setApiKeyValid={setApiKeyValid}/> : <DeleteUserModal show={show} handleClose={handleClose}/> }
             
         </Container>
     );
