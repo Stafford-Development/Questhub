@@ -1,4 +1,4 @@
-# Quester
+# Questhub
  Text Based Interactive RPG Web App showcasing the capabilities of the OPENAI API.
  
 ![OpenAI](https://img.shields.io/badge/OpenAI-412991?logo=openai&logoColor=white&labelColor=gray)
