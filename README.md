@@ -35,4 +35,15 @@ Injected session context pulled from persisted quest state to maintain continuit
 #### Action
 the player’s most recent action clearly delimited to prevent instruction bleed. By externalizing memory to the database and selectively reinjecting only relevant story context, the system minimizes token overhead while preserving long-form coherence. This design treats the AI as a stateless text generator, while the backend enforces narrative structure, consistency, and progression logic.
 ### Technical Challenges
-When I originally built QuestHub, I hadn't yet mastered React Context or Redux. As a result, the application relies heavily on passing props down through multiple layers of components to manage the RPG stats, quest data, and user state.
+When I originally built QuestHub, I hadn't yet mastered React Context or Redux. As a result, the application relies heavily on passing props down through multiple layers of components to manage the quest data and user state.
+#### The Lessons:
+**Maintainability: ** I quickly learned how fragile a codebase becomes when a single change in a top-level component requires updating five child components.
+
+**State Synchronization:** Keeping the XP bar, level-up notifications, and quest logs in sync without a global state provider was a significant logic puzzle.
+
+**Why I kept it this way:** I chose to leave the architecture as-is for this portfolio piece to serve as a benchmark of my progress. It represents a "moment in time" before I adopted modern state management patterns.
+
+#### What I would do differently today:
+**Global Store:** Implement Redux Toolkit or Zustand to decouple the quest logic from the UI components.
+
+**Centralized Logic: **Use React Context specifically for theme and user authentication to keep the component tree clean.
