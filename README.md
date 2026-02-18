@@ -39,9 +39,13 @@ When I originally built QuestHub, I hadn't yet mastered React Context or Redux. 
 #### Lessons
 **Maintainability:** I quickly learned how fragile a codebase becomes when a single change in a top-level component requires updating five child components.
 
+**Component Scaling:** Large narrative blocks (the Quest descriptions) created "information density" issues on mobile, leading to cramped layouts.
+
 **Why I kept it this way:** I chose to leave the architecture as-is for this portfolio piece to serve as a benchmark of my progress. It represents a "moment in time" before I adopted modern state management patterns.
 
 #### What I Would Do Differently Today
 **Global Store:** Implement Redux Toolkit or Zustand to decouple the quest logic from the UI components.
 
 **Centralized Logic:** Use React Context specifically for theme and user authentication to keep the component tree clean.
+
+**Mobile-First Workflow:** Instead of scaling down from a 27-inch monitor, I would start with a 390px viewport. Designing for the smallest screen first forces you to prioritize the most important information.
