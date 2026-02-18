@@ -31,7 +31,8 @@ During prompting, the OpenAI API is given three things:
 #### Role
 A system-level role definition that frames the AI as a controlled narrative engine with strict formatting and immersion constraints.
 #### Context
-jected session context pulled from persisted quest state to maintain continuity across the play session.
-### Action
-the player’s most recent action clearly delimited to prevent instruction bleed. By externalizing memory to the database and selectively reinjecting only relevant story context, the system minimizes token overhead while preserving long-form coherence. This design treats the AI as a stateless text generator, while the backend enforces narrative structure, consistency, and progression logi
-
+Injected session context pulled from persisted quest state to maintain continuity across the play session.
+#### Action
+the player’s most recent action clearly delimited to prevent instruction bleed. By externalizing memory to the database and selectively reinjecting only relevant story context, the system minimizes token overhead while preserving long-form coherence. This design treats the AI as a stateless text generator, while the backend enforces narrative structure, consistency, and progression logic.
+## Technical Challenges
+When I originally built QuestHub, I hadn't yet mastered React Context or Redux. As a result, the application relies heavily on passing props down through multiple layers of components to manage the RPG stats, quest data, and user state.
