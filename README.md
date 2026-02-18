@@ -18,7 +18,9 @@
 ## About The Project
 ### Tech Stack
 #### Front-end
+Built with React.js and JavaScript (ES6+), utilizing functional components to manage the application's UI and logic.
 #### Back-end
+Developed with Node.js and Express to handle user authentication and API communication. Utilizes MongoDB Atlas (Cloud) for persistent storage of user profiles, quest history, and character stats.
 #### Libraries, API's & Tools
-
+Integrated the OpenAI API via Axios to transform user tasks into narrative quests through custom prompt engineering. Authentication and sessions managed via JWT/Local Storage for session persistence,
 ## Technical Deep Dive
