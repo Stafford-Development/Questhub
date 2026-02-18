@@ -16,7 +16,8 @@
 </p>
 
 ## About The Project
-Questhub was made as an attempt to virtualize the narrative storytelling of a Dungeon Master from the tabletop role-playing game Dungeons & Dragons. Using the openAI as a starting point provided a unique opportunity to explore the limits of LLM's and provide custome logic, providing al earnign experience/
+Questhub was created as an exploration into virtualizing the narrative role of a Dungeon Master from the tabletop role-playing game Dungeons & Dragons. By leveraging the OpenAI API as a foundation, the project became an opportunity to push the boundaries of large language models while layering in custom backend logic to guide structure, continuity, and player agency. Beyond being a storytelling platform, Questhub served as a hands-on engineering exercise in prompt design, state management, and building controlled AI-driven systems.
+
 ### Tech Stack
 #### Front-end
 Built with React.js and JavaScript (ES6+), utilizing functional components to manage the application's UI and logic.
@@ -25,3 +26,12 @@ Developed with Node.js and Express to handle user authentication and API communi
 #### Libraries, API's & Tools
 Integrated the OpenAI API via Axios to transform user tasks into narrative quests through custom prompt engineering. Authentication and sessions managed via JWT/Local Storage for session persistence,
 ## Technical Deep Dive
+### Prompting Logic
+During prompting, the OpenAI API is given three things:
+#### Role
+A system-level role definition that frames the AI as a controlled narrative engine with strict formatting and immersion constraints.
+#### Context
+jected session context pulled from persisted quest state to maintain continuity across the play session.
+### Action
+the player’s most recent action clearly delimited to prevent instruction bleed. By externalizing memory to the database and selectively reinjecting only relevant story context, the system minimizes token overhead while preserving long-form coherence. This design treats the AI as a stateless text generator, while the backend enforces narrative structure, consistency, and progression logi
+
