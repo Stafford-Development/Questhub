@@ -16,11 +16,12 @@
 </p>
 
 ## About The Project
+Questhub was made as an attempt to virtualize the narrative storytelling of a Dungeon Master from the tabletop role-playing game Dungeons & Dragons. Using the openAI as a starting point provided a unique opportunity to explore the limits of LLM's and provide custome logic, providing al earnign experience/
 ### Tech Stack
 #### Front-end
 Built with React.js and JavaScript (ES6+), utilizing functional components to manage the application's UI and logic.
 #### Back-end
-Developed with Node.js and Express to handle user authentication and API communication. Utilizes MongoDB Atlas (Cloud) for persistent storage of user profiles, quest history, and character stats.
+Developed with Node.js and Express to handle user authentication and API communication. Utilizes MongoDB Atlas (Cloud) for persistent storage of user profiles and quest history.
 #### Libraries, API's & Tools
 Integrated the OpenAI API via Axios to transform user tasks into narrative quests through custom prompt engineering. Authentication and sessions managed via JWT/Local Storage for session persistence,
 ## Technical Deep Dive
