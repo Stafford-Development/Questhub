@@ -15,3 +15,10 @@
   </a>
 </p>
 
+## About The Project
+### Tech Stack
+#### Front-end
+#### Back-end
+#### Libraries, API's & Tools
+
+## Technical Deep Dive
