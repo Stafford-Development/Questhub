@@ -39,8 +39,6 @@ When I originally built QuestHub, I hadn't yet mastered React Context or Redux. 
 #### Lessons
 **Maintainability:** I quickly learned how fragile a codebase becomes when a single change in a top-level component requires updating five child components.
 
-**State Synchronization:** Keeping the XP bar, level-up notifications, and quest logs in sync without a global state provider was a significant logic puzzle.
-
 **Why I kept it this way:** I chose to leave the architecture as-is for this portfolio piece to serve as a benchmark of my progress. It represents a "moment in time" before I adopted modern state management patterns.
 
 #### What I Would Do Differently Today
