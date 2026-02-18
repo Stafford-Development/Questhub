@@ -1,4 +1,7 @@
 # Quester
  Text Based Interactive RPG Web App showcasing the capabilities of the OPENAI API.
- 
- [![Alt Text](https://img.youtube.com/vi/KHvLWjJLlnU/0.jpg)](https://www.youtube.com/embed/KHvLWjJLlnU)
+<p align="center">
+  <a href="https://www.youtube.com/embed/KHvLWjJLlnU">
+    <img src="https://img.youtube.com/vi/KHvLWjJLlnU/0.jpg" alt="Alt Text">
+  </a>
+</p>
